@@ -1,0 +1,85 @@
+1数据库的设计
+    数据库的范式：
+        为了建立冗余小，结构合理的数据库，设计数据库是必须遵循的一定的法则，在关系型数据库中这就法则就是范式
+        范式就是一种符合设计要求的总结，要设计一个结构合理的关系型数据库，必须满足一定的范式
+    （1）第一范式：就是属性的原子操作，要求属性具有原子性，币可以分解【基本都满足】
+    （2）第二范式：即使记录唯一性约束，表中的记录是唯一的，我们平时使用的主键来实现，之间不可包含业务逻辑。
+    （3）第三范式：就是对字段冗余性的约束，他要求字段没有冗余
+
+    一般平时没有冗余的数据库未必是最好的数据库，有时候为提高运行效率，就必须降低但是标准，适当的暴力一些冗余的数据。
+    具体做法：在概念模型设计的时候，将第三范式的标准，增加字段，允许冗余。
+
+
+2.分库分表：
+    （1）垂直分表
+        垂直分表就是表中的字段划分到不同的数据库中（不破坏第三范式），这种拆分在大型网站比较常见。
+    （2）水平分表：就是按照某种规则将数据库中的数据存到不同的数据库中。
+
+
+    使用取模的方式进行分表。
+    基本实现步骤：
+    说明：将数据存入到四张表中，首先创建四张表，需要一张表来实现id的生成。
+    （1）首先获取数据的id。
+    （2）对数据的id对4取模，确定存入的表。
+    （3）将数据存入到具体的表中。
+
+    数据中数据按照id取出
+    （1）通过ID确定数据库
+    （2）取数据
+
+
+3.数据库优化
+    （1）从数据库中定位出速度慢的语句
+    （2）优化的几个指令
+        show status
+            使用show status使用show status查看MySQL服务器状态信息
+        常用命令
+            --mysql数据库启动了多少时间
+            show status like 'uptime';
+            show  stauts like 'com_select'  show stauts like 'com_insert' ...类推 update  delete（显示数据库的查询，更新，添加，删除的次数）
+            show [session|global] status like .... 如果你不写  [session|global] 默认是session 会话，指取出当前窗口的执行，如果你想看所有(从mysql 启动到现在，则应该 global)
+            //显示到mysql数据库的连接数
+            show status like  'connections '; 
+            //显示慢查询次数
+            show status like 'slow_queries';
+    （3）慢查询：mysql在10s内没有完成响应的数据
+        修改慢查询的时间
+        --查询慢查询时间
+        show variables like 'long_query_time';
+        --修改慢查询时间
+        set long_query_time=1; ---但是重启mysql之后，long_query_time依然是my.ini中的值
+    （4）定位慢查询
+        默认是不会有慢查询的日志记录的，但是可以在开启数据库的时候，设置记录慢查询的日志
+        bin\mysqld.exe --safe-mode  --slow-query-log [mysql5.5 可以在my.ini指定]（安全模式启动，数据库将操作写入日志，以备恢复）
+        bin\mysqld.exe –log-slow-queries=d:/abc.log [低版本mysql5.0可以在my.ini指定]
+        先关闭mysql,再启动, 如果启用了慢查询日志，默认把这个文件放在
+        my.ini 文件中记录的位置
+        #Path to the database root
+        datadir=" C:/ProgramData/MySQL/MySQL Server 5.5/Data/"
+
+
+
+
+
+索引：
+    概念：索引用来快速的寻找特定的记录，所有Mysql索引都以B-树形式保存，如果么有索引，执行查询是mysql就会从第一个记录开始扫描整个表
+    的所有记录，直到找到符合要求的记录，表里的数据越多，这个操作的代价就越高，如果作为速索条件的列上已经创建了索引，Mysql无需扫描
+    任何记录既可迅速的得到数据所在的位置，如果有1000个记录，通过索引查询记录至少要比顺序块100倍。
+
+索引的分类：主键索引  全文索引   唯一索引（可以为null，但不可以重复）  普通索引
+    主键索引：
+        主键索引是唯一性索引，他必须指定primary key。
+        创建方式：（1）id varchar primay key
+                 （2）Alter table tablename ADD primary key (列名)
+                      删除主键：alter table articles drop primary key;
+    
+    查询索引：
+        desc 表名；  不可以显示索引的名称
+        show index from 表名
+        show keys from 表名
+
+    索引上的错误用法：
+    使用模糊查询
+
+
+    

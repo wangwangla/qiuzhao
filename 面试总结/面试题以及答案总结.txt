@@ -1,0 +1,30 @@
+1.String、stringbuffer、String Builder
+    String是final，，不可被继承，内部有不可变的数组，字符串相加吗，生成新的数组，设计会执行append来实现
+    （1）速度：String Builder>String Buuffer >String
+    String慢的原因：String为字符串常量
+    StringBuilder和StringBuffer均为字符串变量，集String一旦创建之后对象是不可以更改的
+
+    线程安全：String Builder是线程不安全的，String Buffer是线程安全的
+
+    使用：少量字符串操作String
+    大量字符串使用string buffer或Stringbuilder
+    单线程使用String Builder
+
+
+    参考答案：都是final类，不可以被继承
+            String长度是不可以变的，其他两个可以变的
+            String Buffer是安全的
+            String Builder的性能更高
+
+            String通过new可能会创建一个对象，可能会创建一个，也有可能会创建两个
+            编译的时候会在在常量池中创建【堆中】，运行时在堆中创建。
+            String+进行连接，底层是通过StringBuffer连接的
+
+2.java序列化
+    序列化定义：将那些实现Seriallizable接口的对象转化为字节序列，并能够恢复成对象
+
+    Java序列化的作用
+        数据在网络之间的传输   数据的持久化
+    
+    如何实现序列化和反序列化
+        接口只是一个标志，并没有什么实质性额
