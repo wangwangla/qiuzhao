@@ -20,6 +20,16 @@
             编译的时候会在在常量池中创建【堆中】，运行时在堆中创建。
             String+进行连接，底层是通过StringBuffer连接的
 
+
+
+String hashcode和toString
+    String有重写Object的hashcode和tostring方法
+    当使用equals方法重写时，通常有必要重写hashcode，已维护hashcode的方法常规规定，该规定声明相对等的两个东西必须相同dhashcode
+
+    如果不重写，那么会有不同的hashcode，在集合中会有两个值相同的对象，从而导致混淆
+
+
+
 2.java序列化
     序列化定义：将那些实现Seriallizable接口的对象转化为字节序列，并能够恢复成对象
 
@@ -27,4 +37,64 @@
         数据在网络之间的传输   数据的持久化
     
     如何实现序列化和反序列化
-        接口只是一个标志，并没有什么实质性额
+        接口只是一个标志，并没有什么实质性的方法或者属性
+
+
+
+3.java实现多线程的三种方法
+    实现多线程的方式
+        继承Thread，重写run函数
+        实现Runnable接口
+        实现callable接口
+
+    区别：
+        实现Runnable接口可以避免Java单继承特性的局限
+        继承Thread类和实现方法启动都是使用start，然后JVM虚拟机将次线程放入到队列中，如果有处理及可以用，则执行run方法
+        实现Callable接口实现call方法，并且线程会有返回值，其他的两种都是重新复写run，没有返回值
+    
+
+    Thread实质还是实现了Runnable接口，启动线程的唯一方法是通过start实例方法，start是一个nativef方法
+    将会启动一个线程，并执行run方法
+
+
+    创建线程的方式：继承Thread类、实现Runnable接口、实现Callable接口通过FutureTask包装器来创建Thread线程、
+    使用ExecutorService、Callable、Future实现有返回结果的多线程。
+
+    （1）继承Thread类创建线程
+    （2）实现Runnable接口
+    （3）实现callable接口
+
+
+4.线程安全
+    线程安全：某个类的行为与其规范一制
+    无论多少个线程执行，也不关系优先级，在一个类在多个线程访问下运转余切正常，并且访问的类在多个线程下，并且访问类不需要其他的同步和协调处理，就认为是线程安全的e
+    
+
+    如何保证：
+    使用变量volitte
+    使用锁
+
+
+如何保证
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

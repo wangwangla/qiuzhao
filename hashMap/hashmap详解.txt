@@ -1,8 +1,32 @@
 Map存入的是key - value在软件开发中是一个经典的结构。
+hash:使用一个散列的结构，通过hash算将将一个长度通过一定个iidngzhi
+Map：存储的是一个key-value
+总结：通过HASH出来的值，然后通过值定位到map然value存储到这个map中
 
 hashMap：底层实现是数组+链表的实现
 
 java 1.7
+        源码分析：key value
+        初始化容量1<<4  16
+        最大的容量1<<30
+        扩容因子  0.75f  在容量的3/进行扩容
+        创建一个数组
+        扩容变量：null就去默认值
+        有三个构造方法
+
+
+        put
+        如果数组是没有初始化，就会进行初始化
+        key是可以为null，那么就会进行特殊处理了一些，将NULL当做Key处理，如果不为null，那么就执行hash
+        得到数组的下标，然后对数据进行遍历Entry，如果key的hash等于hash值，或者说key已经存在，那就将原来的值返回，将新值存进去。
+
+        key值不会覆盖，他会新值替换旧址=值
+
+        什么时候扩容，当put的事实，参数慢3/4的时候进行扩容，
+
+        一定是两倍，默认是16.k扩容一直都是偶数。  
+
+
     （1）是由segment和HashEtry组成
     （2）核心变量：
         初始化桶的大小，桶的底层是数组，所以这是默认数组的大小      16
@@ -49,7 +73,7 @@ Java1.8
 
         Node的核心和hashEntry一样，存放的是key value hashcode  next的数据
 
-        put操作之前判断桶是否为null，空的话就需初始化，，根据当前的key的hashcode定位到具体桶中进行判断是否为null
+        put操作之前判断桶是否为null，空的话就需初始化，根据当前的key的hashcode定位到具体桶中进行判断是否为null
         如果为null，就创建一个桶
         如果有桶，那么就比较桶中的key key的hashcode于写入的key是否相同，如果相同就将值付给e，
         如果当前桶为红黑树，那么需要按照红黑树将数据写入桶中
@@ -69,6 +93,10 @@ Java1.8
         （2）如果桶为null,那么就直接返回null
         （3）否则判断桶的第一个位置的key是否为查询的数据key，如果是就返回，如果不是就进行遍历链表
         或者红黑树
+        1.8进行优化，提高了效率
+
+
+        HashMap在多线程情况下会出现扩容的时候出现死循环
 
 
 
@@ -88,10 +116,21 @@ Java1.8
 
 
 concurrentMap
-        由数组和HashEntry组成和hashMap一样
+        由数组和HashEntry组成和hashMap一样   也分为1.7和1.8
+
+
+        1.7
+        是有数组和链表组成，segment是CurrentHashMap的一个内部类
         核心变量：keySet和entrySet
-        基本和hashMap一样，唯一区别就是核心数据是略，以及链表都是volidate修饰，保证数据 可见性
+        基本和hashMap一样，唯一区别就是核心数据是value，以及链表都是volidate修饰，保证数据 可见性
 
 
-        原理上采用分段锁技术，其中segment继承Lock
+        原理上采用分段锁技术，其中segment继承Lock不同于hashTable无论如何操作，都需要有相同的同步处理，
+        理论上都支持一定数量并发，并且不会影响到其他的segment
+
+
+        put操作：通过key定位到segment，之后在对应的segment上进行put
+
+        虽然可见，但是不保证原子性，所以put是需要枷锁
+        
         

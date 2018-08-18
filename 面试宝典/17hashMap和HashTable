@@ -1,0 +1,3 @@
+hashMap线程不同步  ，可以存储NULL建和NULL对
+
+Hashtable线程同步，不可以存储null建值对

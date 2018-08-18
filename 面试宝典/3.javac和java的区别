@@ -1,0 +1,2 @@
+javac会启动java的编译程序，对扩展名为.java的文件进行编译，生成JVM可以执行的字节码文件，也就是.class文件。
+java运行，会启动java虚拟机，加载类库，并对.class文件进行执行。起点是main

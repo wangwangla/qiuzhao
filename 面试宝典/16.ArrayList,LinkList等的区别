@@ -1,0 +1,13 @@
+ArrayList和Vector都是采用数组的方式实现的 
+ArrayList不同步
+
+ArrayList替代了Vector，查询袁术的速度非常快
+
+
+
+LinkList:底层数据结构是链表，线程不同步，增删元素的速度非常快
+
+
+
+
+Vector很慢，线程是同步的

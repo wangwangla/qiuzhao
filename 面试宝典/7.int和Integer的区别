@@ -1,0 +1,4 @@
+int基本数据类型
+Integer为每一个原始数据类型提供封装类，Integer是java为int提供的封装类
+
+默认值不同
