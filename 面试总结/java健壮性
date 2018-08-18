@@ -1,0 +1,28 @@
+1.一个统一的业务处理响应
+    Response：isSussess  data    errorCode    errorMsg
+    实现：spring切面，JDK动态代理，cglib动态代理
+    匿名子类：使用一个公共的Executor来负责处理请求
+
+    最重要的是统一的返回，不将500返回。
+
+
+2。参数检查
+    在进行业务逻辑之前，应当对参数进行消炎，以保证后续业务的轻量级，也是fast fail,有错尽量早点死。
+
+    if（null==m）{return ;}
+    if(StringUtils.idEmpty((m))){return;}
+    if(collections.isEmpty.isEmpty(m)){return ;}
+    try{
+        JSON。parseObject (m) 
+        return true;
+    }catch(JSONException e){
+        return false;
+    }
+
+3.重试机制对于一些特定的错误，可以使用重试机制，以提高访问成功的几率。
+
+4.幂等机制
+
+
+
+

@@ -1,0 +1,17 @@
+1.spring Aop,干什么的？怎样使用？？
+
+
+2.如果一个接口中有两个实现，，怎样来AutoWire指定一个实现呢？
+    可以使用@Qualifier注解
+
+3.Spring中声明式事务，一般讲transaction放在service层【一般情况下】，抛出了异常，
+
+4.
+
+5.spring boot没有放到容器中，为什么可以运行
+
+6.自定义配置
+
+7.RwquestMapping 可以指定GET和POST，通过GetMapping和PostMapping
+
+

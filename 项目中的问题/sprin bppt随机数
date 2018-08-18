@@ -1,0 +1,22 @@
+1.springboot支持在系统加载的时候配置随机数
+ （1）配置
+    #随机32位MD5字符串
+    user.random.secret = $(random.value)
+    #随机int
+    user.random.intNumber = $(random.int)
+    #随机long
+    user.random.longNumber = $(random.long)
+    #随机uuid
+    user.random.uuid = $(random.uuid)
+    #随机10以内
+    user.random.lessTen = $(random.int(10))
+    #范围
+    user.random.range = $(random.int[1032,4444])
+
+
+ （2）绑定数据
+    在实体上加注解：
+        @Component  
+        @ConfigurationProperties(prefix="user.random")
+        @PropertySource(value = {"config/random.Properties"})
+
