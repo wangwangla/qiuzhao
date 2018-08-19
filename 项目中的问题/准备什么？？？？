@@ -1,0 +1,54 @@
+1.SSM框架，用过
+
+2.知道细节
+
+3.AOP原理
+
+
+数据库
+    所以如何创建？？
+    
+
+
+    什么情况不会走索引
+
+
+
+
+    SQL优化，分库分表
+
+
+
+core
+    hashCode写过？？  什时候重写？？【模拟hashSet的时候写，不仅仅写，hashcode和equals】
+
+    不重写hashcode会怎样，在内存中会存由两分值，这个时候在获取值的时候，就会发生冲突
+
+
+    之前问：hashMap不加锁，会怎样产生死循环
+
+    hashMap的实现原理  ConcurrentMap
+
+
+    ArrayList  linkList的差别，
+
+
+    Set如何防重
+
+    collection的一写方法
+
+    ArrayList如何实现队列和堆栈
+
+
+
+    Synchronize和重入锁的区别
+
+    线程的返回值  callable
+
+
+    ThreadLocal和voladate的区别
+
+
+    IOC  AOP  Spring MVC  Springboot  
+
+    final  volatile的用法
