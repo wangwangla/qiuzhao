@@ -1,0 +1,62 @@
+1.什么是线程局部变量？？
+    （1）线程局部变量是局部于线程内部的变量，属于线程独有，不在对个线程之间共享
+    （2）java提供了ThreadLocal来支持线层局部变量，
+    （3）在web中使用局部线程的生命周期比任何变量的生命周期都要长【不释放会有内存溢出的风险】
+
+2.使用notify和wait写生产者和消费者的代码
+
+3.写一个线程安全的单例模式
+
+4.sleep和wait的区别？
+    两个都有暂停的意思，sleep是短暂的暂停，不会释放锁
+    wait会将锁释放掉，他是条件等待，只有当另一个线程获取锁之后，才可以满足获取锁的条件。
+
+5.ArrayList和HashMap中默认的大小？
+    ArrayList是10个 hashMap是16个
+
+10.HashSet是如何工作的？
+    HashSet的内部采用HashMap实现的，由于Map需要key和value,所有key的都是一个默认的value，hashMap和HashSet一样只有一个key为null的。
+
+11.HshMap和HashTable有什么区别？
+    HashMap是线程不安全的，hashTable是安全的
+    hashMap可以存放key为null和值为NULL，但是hashTable不允许
+
+12.java中的TreeMap是通过红黑树实现的。
+
+13.LinkList是双向链表
+
+14.哪两种方法可以实现集合的排序？
+    TreeSet和TreeMap  也可以使用有序集合collections.sort();
+
+15.ArrayList和LinkList的区别？
+    一个是数组实现，一个是链表实现，所以对于数组，方便取，对于链表方便插入和删除
+    秘密：当数据非常庞大的时候，在尾部进行插入的话，使用ArrayList会比链表更加快。
+
+16.poll和remove的区别？
+    poll在失败是返回的是异常
+    remove返回的是null。
+
+17.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

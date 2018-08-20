@@ -22,5 +22,61 @@
 
 
     代码片段：
+    @Target({ElementType.PARAMETER, ElementType.METHOD})
+    //@Target(ElementType.PARAMETER)  // 方法参数
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    public @interface PermissionNeed {
+        String value() default "";
+    }
 
-    
+
+
+
+    AOP编写
+    @Aspect
+    @Component
+    public class LovePiAspect {
+
+  ///============================zhongdian=============
+    @Pointcut("@annotation(permissionNeed)")
+    public void annotationPointCut(PermissionNeed permissionNeed) {
+
+    }
+      ///============================zhongdian=============
+    @Before("annotationPointCut(permissionNeed)")
+    public void before(JoinPoint joinPoint, PermissionNeed permissionNeed) {
+
+
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        System.out.print("接受方法：" + " 前置日志");
+        String permission = permissionNeed.value();
+        //权限控制业务
+        //拥有的权限
+
+        //单个或者多个，分割符啥的可以自己定义
+          ///============================zhongdian=============
+        if ("admin".contains(permission)) {
+            System.out.println("XXXXXXXXXXXXXXXXXXXXX");
+        } else if("a".contains(permission)){
+            System.out.println("===============");
+        }
+    }
+}
+
+
+
+    使用：
+    @RestController
+    public class UserController {
+
+    @Autowired private UserService userService;
+
+    @RequestMapping("/user")
+    @ResponseBody
+    @PermissionNeed(value = "admin")   ///============================zhongdian=============
+    public User name(){
+        User user = userService.getUserInfo() ;
+        return user;
+    }
+}
