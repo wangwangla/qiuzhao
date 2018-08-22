@@ -1,12 +1,17 @@
 1.在springboot中使用了好多注解，注解不仅仅是可读性，还有其开发速度。
+
 2.元注解：用于注解其他注解的
- （1）Target   @Retention    @Document    @Inherited
+ （1）@Target   @Retention    @Document    @Inherited
     Target:注解声明注解的作用范围，例如范围为类，接口、方法
+    
     Retention:声明了注解的声明周期，注解的有效范围  
         source:源码中有效
         class：在class中有效
         Runtime:在运行时有效
+    
+    
     Document：是一个标记注解，该注解会在生成java文档中保留
+    
     Inherited:注解表明子类是有继承了父类的注解
 
 3.自定义注解：java开发中，jdk自带了注解，是第三方中，我们也可以自定义注解
@@ -22,10 +27,9 @@
 
 
     代码片段：
-    @Target({ElementType.PARAMETER, ElementType.METHOD})
-    //@Target(ElementType.PARAMETER)  // 方法参数
-    @Retention(RetentionPolicy.RUNTIME)
-    @Documented
+    @Target({ElementType.PARAMETER, ElementType.METHOD})//作用范围
+    @Retention(RetentionPolicy.RUNTIME)                 //声明周期
+    @Documented                                         //文档
     public @interface PermissionNeed {
         String value() default "";
     }
