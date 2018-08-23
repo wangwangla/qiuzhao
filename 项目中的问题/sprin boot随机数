@@ -20,3 +20,4 @@
         @ConfigurationProperties(prefix="user.random")
         @PropertySource(value = {"config/random.Properties"})
 
+  

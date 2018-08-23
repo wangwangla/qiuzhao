@@ -3,6 +3,10 @@ ReentrantLock是基于AQS实现的，AQS的基础又是CAS
 ReentrantLock实现的前提是AbstractQueuedSynchronizer[AQS]
 
 
+9.什么是AQS？？
+    AbstractQueueSynchronizer是以双向队列的形式连接所有的Entry，所有的等待线程都被放在一个Entry中并连城双向队列
+
+
 
 
 
