@@ -1,0 +1,259 @@
+#include("/template/common/layout/_page_layout.html")
+#@layout()
+
+#define css()
+<style>
+
+</style>
+#end
+
+#define js()
+<script src="//cdn.bootcss.com/echarts/4.0.2/echarts.min.js"></script>
+        <script src="//cdn.bootcss.com/echarts/4.0.2/extension/bmap.min.js"></script>
+<script type="text/javascript">
+    //nian
+	window.onload = function(){
+		$.ajax({
+			type:"get",
+			url:"#(ctxPath)/service/statistics/tableYearData",
+			success:function(data,textStatus,jqXHR){
+	   var lhtml  = [];
+		var countnum = 0;
+         var jsondata = [];
+		
+		for(var i = 0; i < data.length;i++){
+				lhtml.push(data[i].c)
+				jsondata.push(data[i].z)
+				console.log(lhtml);
+				console.log(jsondata);
+		}
+	var myChart = echarts.init(document.getElementById('mainn'));
+		 option = { title : {         text: '维修订单按照/年', }, tooltip : { },toolbox:{show:true,featrue:{saveAsImage:{show:true}}
+                    },
+                    dataset:{
+                    	source:[
+                    		
+                    	]
+                    },
+                    xAxis:[{
+                    		type:'category',
+                    		data:jsondata
+                    	}],
+                    yAxis:{
+                    	type:'value'
+                    },
+                    series:[
+                    	{"name":"订单个数",
+                    		"type":"bar",
+                    		"data":lhtml
+                    	}
+                    ]};
+
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+	},error:function(XMLHttpRequest,textStatus,errorThrown){
+		}
+});	
+		
+		//季度
+		$.ajax({
+			type:"get",
+			url:"#(ctxPath)/service/statistics/tableJiDuData",
+			success:function(data,textStatus,jqXHR){
+	   var lhtml  = [];
+		var countnum = 0;
+         var jsondata = [];
+		
+		for(var i = 0; i < data.length;i++){
+				lhtml.push(data[i].c)
+				jsondata.push(data[i].z)
+				console.log(lhtml);
+				console.log(jsondata);
+		}
+	
+		var myChart = echarts.init(document.getElementById('mainjd'));
+
+		 option = {
+                    title : {
+                        text: '维修订单按照/季度',
+                    },
+                    tooltip : {
+                    },
+                    toolbox:{
+                    	show:true,
+                    	featrue:{
+                    		saveAsImage:{show:true}
+                    	}
+                    },
+                    dataset:{
+                    	source:[
+                    		
+                    	]
+                    },
+                    xAxis:[{
+                    		type:'category',
+                    		data:jsondata
+                    	}],
+                    yAxis:{
+                    	type:'value'
+                    },
+                    series:[
+                    	{"name":"订单个数",
+                    		"type":"bar",
+                    		"data":lhtml
+                    	}
+                    ]};
+
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+	},error:function(XMLHttpRequest,textStatus,errorThrown){
+		}
+});	
+		
+		//yue
+		$.ajax({
+			type:"get",
+			url:"#(ctxPath)/service/statistics/tableMonthData",
+			success:function(data,textStatus,jqXHR){
+	   var lhtml  = [];
+		var countnum = 0;
+         var jsondata = [];
+		
+		for(var i = 0; i < data.length;i++){
+				lhtml.push(data[i].c)
+				jsondata.push(data[i].z)
+				console.log(lhtml);
+				console.log(jsondata);
+		}
+	
+		var myChart = echarts.init(document.getElementById('mainy'));
+
+		 option = {
+                    title : {
+                        text: '维修订单按照/月',
+                    },
+                    tooltip : {
+                    },
+                    toolbox:{
+                    	show:true,
+                    	featrue:{
+                    		saveAsImage:{show:true}
+                    	}
+                    },
+                    dataset:{
+                    	source:[
+                    		
+                    	]
+                    },
+                    xAxis:[{
+                    		type:'category',
+                    		data:jsondata
+                    	}],
+                    yAxis:{
+                    	type:'value'
+                    },
+                    series:[
+                    	{"name":"订单个数",
+                    		"type":"bar",
+                    		"data":lhtml
+                    	}
+                    ]};
+
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+	},error:function(XMLHttpRequest,textStatus,errorThrown){
+		}
+});	
+		//周
+		$.ajax({
+			type:"get",
+			url:"#(ctxPath)/service/statistics/tableWeekData",
+			success:function(data,textStatus,jqXHR){
+	   var lhtml  = [];
+		var countnum = 0;
+         var jsondata = [];
+		
+		for(var i = 0; i < data.length;i++){
+				lhtml.push(data[i].c)
+				jsondata.push(data[i].z)
+				console.log(lhtml);
+				console.log(jsondata);
+		}
+	
+		var myChart = echarts.init(document.getElementById('mainw'));
+
+		 option = {
+                    title : {
+                        text: '维修订单按照/周',
+                    },
+                    tooltip : {
+                    },
+                    toolbox:{
+                    	show:true,
+                    	featrue:{
+                    		saveAsImage:{show:true}
+                    	}
+                    },
+                    dataset:{
+                    	source:[
+                    		
+                    	]
+                    },
+                    xAxis:[{
+                    		type:'category',
+                    		data:jsondata
+                    	}],
+                    yAxis:{
+                    	type:'value'
+                    },
+                    series:[
+                    	{"name":"订单个数",
+                    		"type":"bar",
+                    		"data":lhtml
+                    	}
+                    ]};
+
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+	},error:function(XMLHttpRequest,textStatus,errorThrown){
+		}
+});	
+	}
+    
+</script>
+#end
+
+#define content()
+    <div class="layui-fluid">
+        
+        <div id="mainn" style="height:400px;"></div>
+        <div>
+        	<p class="count01"></p>
+        </div>
+    </div>
+    <div class="layui-fluid">
+        
+        <div id="mainjd" style="height:400px;"></div>
+        <div>
+        	<p class="count01"></p>
+        </div>
+    </div>
+    <div class="layui-fluid">
+        
+        <div id="mainy" style="height:400px;"></div>
+        <div>
+        	<p class="count01"></p>
+        </div>
+    </div>
+    <div class="layui-fluid">
+        
+        <div id="mainw" style="height:400px;"></div>
+        <div>
+        	<p class="count01"></p>
+        </div>
+    </div>
+
+<script type="text/html" id="barOption">
+
+</script>
+#end

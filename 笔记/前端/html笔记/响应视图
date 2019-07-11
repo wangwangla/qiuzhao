@@ -1,0 +1,33 @@
+窗口的显示
+		user-scalable=no是否可以缩放
+		width=device-width窗口视图和可见视图的宽度
+		initial-scale=1.0,初始化缩放比例
+		maximum-scale=1.0最大缩放比例
+一般的执行是从上到下执行的，所以小的在上，大的在下。
+        <!DOCTYPE html>
+        <html>
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="user-scalable=no, width=device-width , initial-scale=1.0, maximum-scale=1.0" />
+                <title>响应式练习</title>
+                <style type="text/css">
+                    body{
+                        background-color: red;
+                    }
+                    @media(min-width:330px ) {
+                        body{
+                            background-color: blue;
+                        }
+                    }
+                    @media(min-width:440px ) {
+                        body{
+                            background-color: green;
+                        }
+                    }  
+                </style>
+            </head>
+            <body>
+            </body>
+        </html>
+百分比布局
+    将固定的样式换成一个百分比的布局。

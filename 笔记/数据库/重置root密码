@@ -1,0 +1,12 @@
+/*登录mysql*/
+mysql -uroot -p123
+/*切换数据库*/
+use mysql
+/*修改root用户的密码*/
+update user set password=password('1234') where user='root';
+
+
+如果你忘记了root用户的密码，那么你就无法登录mysql，也就不能修改密码了。这时登录mysql就比较麻烦：
+    打开一个窗口，执行：mysqld --skip-grant-tables；
+    这时再开一个窗口来登录mysql：mysql -u root；
+    然后使用上面相同的方式来修改root用户的密码。

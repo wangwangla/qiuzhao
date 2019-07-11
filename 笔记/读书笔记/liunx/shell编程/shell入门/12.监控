@@ -1,0 +1,31 @@
+1.显示内存信息:free
+  显示应哦按空间：df
+
+
+2.一定时间执行脚本一次
+  使用的命令是at和cron
+  (1)at:
+        at [选项] [时间]
+            -m:指定任务之后之后会发邮件
+            -I:atq的别名
+            -d:atrm的别名
+            -v：显示任务将被执行的时间
+            -c:打印任务的内容到标准输出
+            -V:显示版本
+            -q:指定队列
+            -f:指定文件读入任务
+            -t:一时间参数的方式执行任务
+  小灶：ps -ef|grep atd |grep -v grep 显示atd是否执行
+  at是可以一次性计划的设定，当提交一个任务之后，会启动一个atd进程，它的作用不断的在文件扫描，是否
+  有需要执行的任务
+  atd没有启动，at是不会执行的
+
+  小灶：启动执行
+    /etc/init.d start
+    /etc/init.d restart
+
+网卡启动和网卡关闭
+ifup eth0
+ifdown eth0    
+
+[目录](https://github.com/wangwangla/biji/tree/master/README.md)

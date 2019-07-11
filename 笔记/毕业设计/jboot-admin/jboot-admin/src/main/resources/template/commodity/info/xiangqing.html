@@ -1,0 +1,44 @@
+#include("/template/common/layout/_page_layout.html")
+#@layout()
+
+#define css()
+<style>
+
+</style>
+#end
+
+#define js()
+<script type="text/javascript">
+    layui.use(['form', 'layer'], function () {
+        // 操作对象
+        var form = layui.form
+            , layer = layui.layer
+            , $ = layui.jquery;
+    });
+</script>
+#end
+
+#define content()
+<div class="x-body">
+   <div class="layui-form-item">
+        <label class="layui-form-label"><em class="require-mark">*</em>供应商名称</label>
+        <p style="line-height:40px">#(data.supplier_name)</p> 
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"><em class="require-mark">*</em>供应商地址</label>
+      	<p style="line-height:40px">#(data.supplier_address)</p>  
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"><em class="require-mark">*</em>负责人</label>
+        <p style="line-height:40px">#(data. supplier_lead)</p> 
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"><em class="require-mark">*</em>联系方式</label>
+      	<p style="line-height:40px">#(data.supplier_tel)</p>  
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"><em class="require-mark">*</em>备注</label>
+      	<p style="line-height:40px">#(data.supplier_remark)</p>  
+    </div>
+</div>
+#end

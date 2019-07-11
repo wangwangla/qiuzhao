@@ -1,0 +1,122 @@
+1.for的基本语法
+    for 变量 in 取值列表
+    do 
+        commmands;
+    done
+
+    #!/bin/bash
+    for te in test01 test01 test01 test01 test01 
+        do 
+            echo "the data is $te"
+    done
+2.在这个里面有一个默认的分隔符就是使用空格，假如数据本身也是空格显示的，那么就需要使用双引号
+3.for-in结果的变量取值不一定非要限制在取值列表中，脚本可以任意改变，可以在循环中赋值其他的值，在循环结束后，也可以对其操作
+    #!/bin/bash
+    echo "for循环使用"
+    for  num in  1 2 2 2 2
+    do 
+        num = $num+1
+        echo "num is $num"
+    done
+    $num=100
+    echo "SSSS"
+
+    #!/bin/bash
+    echo "for循环使用"
+    for  num in  1 2 2 2 2
+    do 
+        if test 1 eq $num
+        then 
+            echo "testXXX"
+        fi
+    done
+4.c式for循环
+    for(exp1,exp2,exp3){
+    do
+        循环体
+    done
+    }
+
+    #!/bin/bash
+    echo "使用c式for循环"
+    for((i=0;i<10;i++))
+    do
+        echo "我是$i"
+    done
+    
+    注意：双括号并且没有数据类型，第二个参数只可以有一个，不可以是多个的，但是可以存在多个变量
+    #!/bin/bash
+    echo "使用c式for循环"
+    for((i=0,j=0;i<10;i++,j++))
+    do
+        echo "我是$i"
+    done
+5.多条件的while结构
+    可以有多个表达式，也可以是一个表达式，他会依次的执行每一个表达式，按照最后一个表达式的结果，如果最后一个为真，就会执行循环部分
+    如果最后一个为假，即使前面的为真，也是不会执行的。
+    
+    #!/bin/bash
+    echo "使用多个表达式的while结构"
+    num=4           %不可以加空格
+    while [ $num -gt 3 -a $num -lt 6 ] %需要加空格，不加会出错
+    do 
+        echo num=$num
+        let num++         %自加
+    done
+6.和while类似的用法until
+    until test expre
+    do
+        commmands
+    done;
+
+    为真就会返回0，为假就返回1
+    #!/bin/bash
+    num=1
+    echo until测试
+    until [ $num -ge 6 ]
+    do
+        echo "the current num is $num"
+        let num++
+    done
+    echo 结束
+7.循环的嵌套
+    #!/bin/bash
+    echo "循环嵌套"
+    num=5
+    while [ $num -lt 10 -o $num -gt 5 ]
+    do
+        echo num=$num
+        let num++
+            if [ $num -eq 9 ]
+            then
+                break
+            fi
+    done
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[目录](https://github.com/wangwangla/biji/tree/master/README.md)s
+
+
+
+
+

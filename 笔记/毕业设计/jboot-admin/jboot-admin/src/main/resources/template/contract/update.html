@@ -1,0 +1,106 @@
+#include("/template/common/layout/_page_layout.html")
+#@layout()
+
+#define css()
+<style>
+
+</style>
+#end
+
+#define js()
+<script type="text/javascript">
+    layui.use(['form', 'layer'], function () {
+        // 操作对象
+        var form = layui.form
+            , layer = layui.layer
+            , $ = layui.jquery;
+
+        form.on('submit(sub)', function(data){
+
+            util.sendAjax ({
+                type: 'POST',
+                url: '#(ctxPath)/contract/postUpdate',
+                data: $('#addForm').serialize(),
+                loadFlag: true,
+                success : function(data){
+                    pop_close();
+                }
+            });
+
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+    });
+</script>
+#end
+
+#define content()
+<div class="x-body">
+    <form id="addForm" class="layui-form" action="">
+        <input type="hidden" name="data.contractId" value="#(data.contractId)">
+               <div class="layui-form-item">
+            <label class="layui-form-label"><em class="require-mark">*</em>合同名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="data.contractName" placeholder="合同名称" class="layui-input" value="#(data.contractName)" required  lay-verify="required" autocomplete="off"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><em class="require-mark">*</em>开始日期</label>
+            <div class="layui-input-block">
+                <input type="text" name="data.contractStartDate" placeholder="开始日期" class="layui-input" value="#(data.contractStartDate)" required  lay-verify="required" autocomplete="off"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><em class="require-mark">*</em>结束日期</label>
+            <div class="layui-input-block">
+                <input type="text" name="data.contractEndDate" placeholder="开始日期" class="layui-input" value="#(data.contractEndDate)" required  lay-verify="required" autocomplete="off"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><em class="require-mark">*</em>合同金额</label>
+            <div class="layui-input-block">
+                <input type="text" name="data.contractMoney" placeholder="合同金额" class="layui-input" value="#(data.contractMoney)" required  lay-verify="required" autocomplete="off"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><em class="require-mark">*</em>合同内容</label>
+            <div class="layui-input-block">
+                <input type="text" name="data.contractContent" placeholder="合同内容" class="layui-input" value="#(data.contractContent)" required  lay-verify="required" autocomplete="off"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><em class="require-mark">*</em>机构编号</label>
+            <div class="layui-input-block">
+                <input type="text" name="data.instinitionId" placeholder="机构编号" class="layui-input" value="#(data.instinitionId)" required  lay-verify="required" autocomplete="off"/>
+            </div>
+        </div>
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label"><em class="require-mark">*</em>网点编号</label>
+            <div class="layui-input-block">
+                <input type="text" name="data.wdId" placeholder="网点编号" class="layui-input" value="#(data.wdId)" required  lay-verify="required" autocomplete="off"/>
+            </div>
+        </div>
+        
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label"><em class="require-mark">*</em>甲方负责人</label>
+            <div class="layui-input-block">
+                <input type="text" name="data.jiaLead" placeholder="甲方负责人" class="layui-input" value="#(data.jiaLead)" required  lay-verify="required" autocomplete="off"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><em class="require-mark">*</em>安装日期</label>
+            <div class="layui-input-block">
+                <input type="text" name="data.installDate" placeholder="安装日期" class="layui-input" value="#(data.installDate)" required  lay-verify="required" autocomplete="off"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+            <button  class="layui-btn" lay-filter="sub" lay-submit>
+                保存
+            </button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </form>
+</div>
+#end

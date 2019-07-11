@@ -1,0 +1,137 @@
+1.工具所在的目录是bin目录下，这些只是对tools下的包装，不同额的版本差异较大。
+ 如果使用的1.5版本，在使用更加时，部分功能无法使用，可以通过启动增加参数来解决
+  -Dcom.sun.management.jmxremote开启JMX，在1.6之后默认是开启的。
+
+2.使用方式：cmd到达bin目录下，在dos命令行中输入指令就可以了。
+  jps 显示系统内的所有进程
+  jstat：收集hotspot的运行数据
+  jinfo:显示配置信息
+  jmap：生成虚拟机快照
+  jhat：分析栈文件，建立一个服务器，用户通过浏览器查看效果
+  jstack：先后虚拟机进程快照
+
+  jps:虚拟机进程状况工具
+    列出正在运行的虚拟机进程，显示虚拟机执行的主类、以及ID
+
+    -q：只输出LVMID，省略主类
+    -m:只输出主类
+    -v:输出启动是的参数
+    -l:输出主类的全名，执行路径，输出jar路径
+    -m：传输给main的参数
+
+  jstat:虚拟统计信息监听工具
+    用于监听虚拟机各种运行状态信息的命令行工具，显示本地或者远程虚拟机进程中的类加载、内存、垃圾收集等参数。
+    在没有GUI时，只提供了纯文本控制台服务器，将运行期定位虚拟机性能问题的首选。
+
+    jstat GC 2705 250 20  对2705查询20次间隔为250
+      -class:类装载、卸载数量、总空间以及类装载所耗费的时间
+      -gc：垃圾回收
+      -gccapacity:监听内容与gc相同，输出主要关注堆各个分区的用的的最大、最小空间。
+      -gcutil：监听内容与gc相同，主要关注已使用占未使用的多少。
+      -gcnew:监听新生代状况
+      -gcnewCapacity:监听内容与-gcnew一致，关注最大和自导的使用空间
+      -gcold：监听老年代的使用
+      -gcoldcapacity:监听老年代最大和最小内存使用
+      -gcpermcapacity：永久带十一点最大值和最小值
+      -compiler:编译器编译过的方法以及耗时
+      -printcompilation：输出已经被编译的方法
+         MC       MU      CCSC     CCSU       OC          OU       YGC    FGC    FGCT     GCT
+      49740.0  47091.6   5708.0   4883.6    124928.0     65902.0     80     0    0.000    2.708
+        
+  jinfo：配置信息监控
+    实时的调整和查看虚拟机各项参数，jps是显示指定的采纳数列表，想要查看未知的数据，可以使用jinfo -flag
+    -sysprops：将虚拟机进程打印出来
+
+  jmap:生成内存映像，生成快照
+    jmap -heap
+    C:\Users\Administrator>jmap -heap 5796
+    Attaching to process ID 5796, please wait...
+    Debugger attached successfully.
+    Server compiler detected.
+    JVM version is 25.121-b13
+
+    using thread-local object allocation.
+    Garbage-First (G1) GC with 4 thread(s)
+
+    Heap Configuration:
+      MinHeapFreeRatio         = 40
+      MaxHeapFreeRatio         = 70
+      MaxHeapSize              = 1073741824 (1024.0MB)
+      NewSize                  = 1363144 (1.2999954223632812MB)
+      MaxNewSize               = 643825664 (614.0MB)
+      OldSize                  = 5452592 (5.1999969482421875MB)
+      NewRatio                 = 2
+      SurvivorRatio            = 8
+      MetaspaceSize            = 21807104 (20.796875MB)
+      CompressedClassSpaceSize = 1073741824 (1024.0MB)
+      MaxMetaspaceSize         = 17592186044415 MB
+      G1HeapRegionSize         = 1048576 (1.0MB)
+
+    Heap Usage:
+    G1 Heap:
+      regions  = 1024
+      capacity = 1073741824 (1024.0MB)
+      used     = 97892336 (93.35740661621094MB)
+      free     = 975849488 (930.6425933837891MB)
+      9.11693423986435% used
+    G1 Young Generation:
+    Eden Space:
+      regions  = 27
+      capacity = 214958080 (205.0MB)
+      used     = 28311552 (27.0MB)
+      free     = 186646528 (178.0MB)
+      13.170731707317072% used
+    Survivor Space:
+      regions  = 2
+      capacity = 2097152 (2.0MB)
+      used     = 2097152 (2.0MB)
+      free     = 0 (0.0MB)
+      100.0% used
+    G1 Old Generation:
+      regions  = 65
+      capacity = 127926272 (122.0MB)
+      used     = 67483632 (64.35740661621094MB)
+      free     = 60442640 (57.64259338378906MB)
+      52.75197263623847% used
+
+    21416 interned Strings occupying 2124288 bytes.
+option
+    -dump：生成堆快照
+    -finalizeinfo:显示finalize队列
+    -heap：显示栈
+    -histo:显示堆中对象
+    -permstat：显示永久带
+    -F:可以强制生成快照
+jhat:快照分析工具
+  C:\Users\Administrator>jhat eclipse.bin
+  http://lco:7000
+
+jstack：堆栈拟机进程快照跟踪工具
+  C:\Users\Administrator>jstack -l 5796
+
+  ############################################
+    Thread中的getAllStackTraces（）方法可以实
+                现jstack的工作
+  ############################################
+
+JSDIS:JIT生成反汇编
+
+JDK可视化工具
+  JConsole和VisualVM
+  JConsole:java监视与管理控制台
+    他是给予JMX的可视化监视管理工具
+    使用步骤：
+    （1）bin目录下启动jconsole
+         可以看到页面，一个有6个内容，页面显示的是整个虚拟机的运行数据
+    (2)内存监控
+         相当于jstat命令，监听内存总虚拟机内存变化
+
+         内存大小是多少？？
+          给定eden就可以知道Survivor ，然后整个新生代为eden*1.25【默认】
+        执行了gc，为什么内存依旧没减少？
+          执行的时候，程序并未结束。
+
+    （3）线程监控
+        相当于jstat，线程过长时间停顿有：等待外部资源、死循环、锁等待
+        对于读取键盘输入或者是从磁盘载入数据，这一段时间内，是并不会使用CPU的，但是如果是执行空循环，这段时间CPU占用是非常高的
+        在等待这段时间中，是不会分时间片给线程的

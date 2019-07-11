@@ -1,0 +1,609 @@
+
+jboot-admin-parent父类
+|
+|
+|--jboot-admin-base基础配置
+|		
+|		
+|jboot-admin对外提供功能
+|
+|
+|
+|jboot-admin-service 提供服务[聚合项目]
+|	|
+|	|--api
+|	|
+|	|--entity
+|	|
+|	|--provider
+|
+
+
+响应请求
+	jboot-admin
+		 功能：
+			 controller存放的地方
+			 config拦截器
+			 验证
+		父类：
+			<parent>
+				<artifactId>jboot-admin-parent</artifactId>
+				<groupId>io.jboot.admin</groupId>
+				<version>1.0</version>
+			</parent>
+		依赖：
+			 <dependency>
+				<groupId>io.jboot.admin</groupId>
+				<artifactId>jboot-admin-service-api</artifactId>
+				<version>1.0</version>
+			</dependency>
+		
+
+基础配置
+	jboot-admin-base
+		插件
+		rpc
+		
+
+提供服务
+	jboot-admin-service
+		包含
+			<modules>
+				<module>jboot-admin-service-api</module>
+				<module>jboot-admin-service-entity</module>
+				<module>jboot-admin-service-provider</module>
+			</modules>
+			jboot-admin-service-api
+				依赖：
+				   <dependency>
+					<groupId>io.jboot.admin</groupId>
+					<artifactId>jboot-admin-service-entity</artifactId>
+					<version>1.0</version>
+				   </dependency>
+			jboot-admin-service-entity
+			依赖：
+				<dependency>
+					<groupId>io.jboot.admin</groupId>
+					<artifactId>jboot-admin-base</artifactId>
+					<version>1.0</version>
+				</dependency>
+			jboot-admin-service-provider
+			依赖：
+				<dependency>
+					<groupId>io.jboot.admin</groupId>
+					<artifactId>jboot-admin-service-api</artifactId>
+					<version>1.0</version>
+				</dependency>
+
+
+
+
+
+
+
+jboot-admin
+	程序入口：
+	package io.jboot.admin.controller;
+	到达index页面
+	public void index() {
+        render("index.html");
+    }
+	
+	index:
+		<div class="layui-header my-header">
+		<ul class="layui-nav" lay-filter="side-top-left">
+		<ul class="layui-nav my-header-user-nav" lay-filter="side-top-right">
+		<div class="layui-side my-side">
+		
+	如果运行项目是一个登陆页面，所以最先达到的不是这里，应该是拦截器
+		io.jboot.admin.config.JfinalConfigListener有这模一段
+		    @Override
+			public void onInterceptorConfig(Interceptors interceptors) {
+				interceptors.add(new LogInterceptor());
+				interceptors.add(new AuthInterceptor());
+				interceptors.add(new NotNullParaInterceptor("/template/exception.html"));
+				interceptors.add(new BusinessExceptionInterceptor("/template/exception.html"));
+			}
+		应该是io.jboot.admin.support.log.LogInterceptor;
+		 interceptors.add(new LogInterceptor());
+		 public class LogInterceptor implements Interceptor 
+		 跟了源码，云里来，雾里去的，不过发现了应该是在配置中读取的，然后去了登陆。
+		     public void login() {
+				if (SecurityUtils.getSubject().isAuthenticated()) {
+					redirect("/");
+				} else {
+					render("login.html");
+				}
+		 那现在就去login看一下
+			特别说一下，这个是什么<h3>#(APP.name)</h3>,在启动的似乎就将这些数据放入到engine中 
+			
+			    public void onJfinalEngineConfig(Engine engine) {
+					engine.setDevMode(true);
+					AppInfo app = Jboot.config(AppInfo.class);
+					engine.addSharedObject("APP", app);
+					engine.addSharedObject("RESOURCE_HOST", app.getResourceHost());
+				}
+				
+				AppInfo app = Jboot.config(AppInfo.class);怎样来的
+				Jboot.config(AppInfo.class);
+				哪又怎么了，猜想应该和这个注释有关
+				@PropertyConfig(prefix = "jboot.admin.app")
+				public class AppInfo {
+
+					private String name;
+					private String org;
+					private String orgWebsite;
+					private String resourceHost;
+					private String copyRight;
+				}			
+				所有启动结束之后
+				JbootAppListenerManager.me().onJbootStarted();
+				    public void onJbootStarted() {
+					/** 集群模式下验证码使用 redis 缓存 */
+					CaptchaManager.me().setCaptchaCache(new CaptchaCache());
+				}
+				
+				
+				
+				
+				浏览器发送请求，这个时候将权限缓存
+				    public static void init() {
+						ResService sysResApi = Jboot.service(ResService.class);
+						List<Res> sysResList = sysResApi.findByStatus(ResStatus.USED);
+						List<String> list = new ArrayList<String>();
+						for (Res res : sysResList) {
+							list.add(res.getUrl());
+						}
+						urls = list;
+					}
+				
+				    public void login() {
+						if (SecurityUtils.getSubject().isAuthenticated()) {
+							redirect("/");
+						} else {
+							render("login.html");
+						}
+					}
+								
+				
+			 <form class="layui-form layui-form-pane" method="get" action="">
+			 它的登录为什么是get
+			 
+		        util.sendAjax ({
+                type: 'POST',
+                url: '#(ctxPath)/postLogin',
+                data: $.param(data.field),
+                loadFlag: true,
+                success : function(data) {
+                    window.location.href = "/";
+                },
+			看到这个，我都感觉傻了，越来越懵逼，
+			看到ajax，感觉天晴了，ajax有返回状态，如果成功，那么去重新请求，知道vue或者前后端分离的，就不会太晕，页
+			面只是拿取数据，不管跳转，前后端分离呀
+			
+			可以去index页面。
+			
+			先去随便截取一段看一眼
+				 #shiroHasPermission('/system/user/profile')
+				<dd><a href="javascript:;" href-url="/system/user/profile">个人资料</a></dd>
+				#end
+				#shiroHasPermission('/system/user/changepwd')
+				<dd><a href="javascript:;" href-url="/system/user/changepwd">修改密码</a></dd>
+				#end
+				<dd><a href="#(ctxPath)/logout"><i class="layui-icon">&#x1006;</i>退出</a></dd>
+				明显就是说，有权限就给你显示，没有权限你就滚吧。
+				
+			其实登录还没解决掉
+			看一眼他都是干了什么
+			    @Before( {POST.class, LoginValidator.class} )
+				public void postLogin() {
+					获取用户名和密码
+					String loginName = getPara("loginName");
+					String pwd = getPara("password");
+					将他们放入到token中
+					MuitiLoginToken token = new MuitiLoginToken(loginName, pwd);
+					Subject subject = SecurityUtils.getSubject();
+
+					RestResult<String> restResult = new RestResult<String>();
+					restResult.success().setMsg("登录成功");
+
+					try {
+						if (!subject.isAuthenticated()) {
+							token.setRememberMe(false);
+							subject.login(token);
+
+							User u = userService.findByName(loginName);
+							subject.getSession(true).setAttribute(Consts.SESSION_USER, u);
+						}
+						if (getParaToBoolean("rememberMe") != null && getParaToBoolean("rememberMe")) {
+							setCookie("loginName", loginName, 60 * 60 * 24 * 7);
+						} else {
+							removeCookie("loginName");
+						}
+					} catch (UnknownAccountException une) {
+						restResult.error("用户名不存在");
+					} catch (LockedAccountException lae) {
+						restResult.error("用户被锁定");
+					} catch (IncorrectCredentialsException ine) {
+						restResult.error("用户名或密码不正确");
+					} catch (ExcessiveAttemptsException exe) {
+						restResult.error("账户密码错误次数过多，账户已被限制登录1小时");
+					} catch (Exception e) {
+						e.printStackTrace();
+						restResult.error("服务异常，请稍后重试");
+					}
+
+					renderJson(restResult);
+				}
+							
+							
+	启动
+		public class Application {
+			public static void main(String [] args){
+				Jboot.run(args);
+			}
+		}
+		
+		private static void parseArgs(String[] args) {
+			判断有么有参数，将参数装入数据，一般启动么有参数，直接过去了
+			if (args != null && args.length != 0) {
+				String[] var1 = args;
+				int var2 = args.length;
+
+				for(int var3 = 0; var3 < var2; ++var3) {
+					String arg = var1[var3];
+					int indexOf = arg.indexOf("=");
+					if (arg.startsWith("--") && indexOf > 0) {
+						String key = arg.substring(2, indexOf);
+						String value = arg.substring(indexOf + 1);
+						setBootArg(key, value);
+					}
+				}
+
+			}
+		}
+		
+		 public void start() {
+			this.printBannerInfo();  //打印
+			this.printConfigInfo();  //打印
+			this.ensureServerCreated();  //创建server
+			if (!this.startServer()) {    //如果启动失败，就打印启动失败
+				System.err.println("jboot start fail!!!");
+			} else {
+				this.printServerPath();       //server classPath : F:\开源项目\jboot-admin\jboot-admin\target\classes
+				this.printServerUrl();        //server webRoot : F:\开源项目\jboot-admin\jboot-admin\target\classes
+				if (this.isDevMode()) {			//开发模式
+					AutoDeployManager.me().run(); //server started success , url : http://127.0.0.1:8888/
+				}
+
+				JbootAppListenerManager.me().onJbootStarted();
+																18-11-27 9:10:53 ===============================================================
+																18-11-27 9:10:53 ===============================================================
+			}
+		}
+		
+		
+		
+linux下查看内存容量
+	free -m
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+controller 的写法
+base
+public class BaseController extends JbootController {
+}
+使用，具体实现
+public class MainController extends BaseController {
+}
+将数据放入域中，这里我个人认为并不是前后端分离，因为controller中有页面，这个controller，目前也就没设说了，它的数据来自于service
+所以暂时不对这里做介绍，对于权限，稍后在说，下来api
+
+很明显数据的传输是RPC，使用motan实现rpc，对于权限先不说，
+先去官网偷点料
+
+
+RPC远程调用
+在Jboot中，RPC远程调用是通过新浪的motan、或阿里的dubbo来完成的。计划会支持 grpc和thrift等。
+
+使用步骤：
+第一步：配置Jboot.properties文件，内容如下：
+#默认类型为 motan (支持:dubbo,计划支持 grpc 和 thrift)
+jboot.rpc.type = motan
+#发现服务类型为 consul ，支持zookeeper。
+jboot.rpc.registryType = consul
+jboot.rpc.registryAddress = 127.0.0.1:8500
+第二步：定义接口
+public interface HelloService {
+    public String hello(String name);
+}
+第三步：通过@JbootrpcService注解暴露服务到注册中心
+@JbootrpcService
+public class myHelloServiceImpl  implements HelloService {
+    public String hello(String name){
+         System.out.println("hello" + name);
+         return "hello ok";
+    }
+}
+第四步：客户调用
+ HelloService service = Jboot.me().service(HelloService.class);
+ service.hello("michael");
+如果是在Controller中，也可以通过 @JbootrpcService 注解来获取服务，代码如下：
+
+public class MyController extends JbootController{
+    
+    @JbootrpcService
+    HelloService service ;
+    
+    public void index(){
+        String text = service.hello();
+        renderText(text);
+    }
+    
+}
+配置中心
+下载consul
+https://www.consul.io
+
+启动consul
+consul agent -dev
+允许其他机器访问consul:
+
+consul agent -dev -client=本机局域网IP
+zookeeper
+下载zookeeper
+http://zookeeper.apache.org/releases.html
+
+启动zookeeper
+下载zookeeper后，进入zookeeper目录下，找到 conf/zoo_example.cfg，重命名为 zoo.cfg。
+
+zoo.cfg 内容如下：
+
+tickTime=2000
+dataDir=/var/lib/zookeeper
+clientPort=2181
+在终端模式下，进入 zookeeper的更目录，执行：
+
+bin/zkServer.sh start
+关于zookeeper更多的内容，请查看 http://zookeeper.apache.org 和 http://zookeeper.apache.org/doc/trunk/zookeeperStarted.html
+
+
+
+
+这个里面在controller中的使用
+   @JbootrpcService
+    HelloService service ;
+在这个案例中，就是使用这样的方式，所以客户端是没啥说了，现在也只能去看一眼服务端，是如何将其暴露出来的
+===============================================================================================================================
+===============================================================================================================================
+===============================================================================================================================
+===============================================================================================================================
+===============================================================================================================================
+============================API==API===API==API===API======API====API===API===vAPI====API=======API====API
+===============================================================================================================================
+===============================================================================================================================
+===============================================================================================================================
+===============================================================================================================================
+
+
+
+api这里的生成代码就不说了
+可看看到这里面都是接口。这种接口在哪里使用，这个应该回忆一下包的依赖
+
+	   <dependency>
+		<groupId>io.jboot.admin</groupId>
+		<artifactId>jboot-admin-service-entity</artifactId>
+		<version>1.0</version>
+	   </dependency>
+它竟然依赖于entity，这个其实也不会很麻烦，因为会有返回参数，传入参数这样的，肯定使用到了实体，所以对吧，自己解决。
+用事实说话： public boolean save(RoleRes model);
+实体也没啥说了，他有状态，还有就是自动生成的代码。也就是说这里是service和dao
+
+感觉结束了
+
+最后一个
+第三步：通过@JbootrpcService注解暴露服务到注册中心
+@JbootrpcService
+public class myHelloServiceImpl  implements HelloService {
+    public String hello(String name){
+         System.out.println("hello" + name);
+         return "hello ok";
+    }
+}
+
+看到这里感觉已经放心多了，这里可以使用JbootrpcService可以将其注册出去。
+
+
+这里没啥说了，感觉难的地方就是权限吧。
+
+
+
+
+这个是最后在说吧，现在到了Redis缓存，因为感觉这个简单。
+先去官网偷点东西
+在使用Reids之前，先进行Redis配置，配置内容如下：
+
+	jboot.redis.host=127.0.0.1
+	jboot.redis.password=xxxx
+	配置后，就可以通过如下代码获取 JbootRedis 对redis进行操作：
+	JbootRedis redis = Jboot.me().getReids();
+	redis.set("key1","value1");
+	String value = redis.get("key1");
+	System.out.println(value); // 输出 value1
+
+这里啥也没看到，只知道了如何写配置文件，其他的也没啥用了
+
+再来一点
+		zcard	返回有序集 key 的基数
+		zcount	返回有序集 key 中， score 值在 min 和 max 之间(默认包括 score 值等于 min 或 max )的成员的数量
+		zincrby	为有序集 key 的成员 member 的 score 值加上增量 increment
+		zrange	返回有序集 key 中，指定区间内的成员
+		zrevrange	返回有序集 key 中，指定区间内的成员
+		zrangeByScore	返回有序集 key 中，所有 score 值介于 min 和 max 之间(包括等于 min 或 max )的成员
+		zrank	返回有序集 key 中成员 member 的排名。其中有序集成员按 score 值递增(从小到大)顺序排列
+
+似乎也没啥 可以帮助的，那就再去官网吧
+	使用步骤
+		第一步：配置jboot.properties文件，内容如下：
+		#默认类型为ehcache ehcache (支持:ehcache,redis,ehredis)
+		jboot.cache.type = redis
+		jboot.cache.redis.host = 127.0.0.1
+		jboot.cache.redis.password =
+		jboot.cache.redis.database =
+		备注：ehredis 是一个基于ehcache和redis实现的二级缓存框架。
+
+		第二步：使用缓存
+		Jboot.me().getCache().put("cacheName", "key", "value");
+		注意事项
+		Jboot的分布式session是通过缓存实现的，所以如果要启用Jboot的分布式session，请在缓存中配置类型为redis或者ehredis。
+emmmmm……
+这样使用是不是很麻烦呢
+	那就去看案例的是怎样使用的，其实应想一下，这缓存会在哪里，service呀。emmm……那就去provider
+	
+	@Cacheable(name = CacheKey.CACHE_KEYVALUE)
+    @Override
+    public String getCodeByCodeDescAndType(String type, String codeDesc) {
+        Columns columns = Columns.create();
+        columns.eq("type", type).eq("codeDesc", codeDesc);
+        Data data = DAO.findFirstByColumns(columns);
+	}
+	Cache是啥，是一个反正不是自己写的，其实就可以了
+	(name = CacheKey.CACHE_KEYVALUE)key是自己写的，下来测试，还有其他没，目前不知道
+	
+	
+
+
+@Bean
+@Singleton
+@JbootrpcService
+public class UserRoleServiceImpl extends JbootServiceBase<UserRole> implements UserRoleService {
+这个是为什么使用bean、使用singleton
+
+
+@RpcService
+通过以上 @Inject 和 @Bean 的配合，我们很方便的在项目中自由的对代码进行注入，但是，如果注入的是一个RPC的
+服务，那么需要通过 @RpcService 进行注入。更多关于RPC部分，请查看RPC章节。
+什么呀，
+什么呀，
+什么呀，
+
+bean呀
+
+具体实现
+Google Guice
+Jboot 的AOP功能，是使用了Google的Guice框架来完成的，通过AOP，我们可以轻易的在微服务体系中监控api的调用，轻易的使用@Cacheable，@CachePut，@CacheEvict等注解完成对代码的配置。
+
+@Inject 和 @Bean
+和Spring一样，Jboot是通过注解 @Inject 来对变量进行赋值注入的，例如：
+
+public class AopDemo extends JbootController {
+
+    @Inject
+    CategoryService service;
+
+    public void index() {
+        renderHtml("service:" + service.hello(""));
+    }
+      
+    public static void main(String[] args) {
+        Jboot.run(args);
+    }
+}
+但是，必须强调的是：CategoryService接口能够被注入，其实必须有实现类，同时实现类必须通过 @Bean 进行配置，例如：
+
+接口代码：
+
+public interface CategoryService {
+    public String hello(String text);
+}
+实现类代码：
+
+@Bean //必须通过 @Bean 进行配置，让CategoryServiceImpl处于自动暴露状态
+public class CategoryServiceImpl implements CategoryService {
+    @Override
+    public String hello(String text) {
+        return "CategoryServiceImpl say hello " + text;
+    }
+
+}
+但是，当@Inject注入的不是一个接口类，而是一个普通类，那么无需 @Bean 的配合。例如：
+
+public class AopDemo extends JbootController {
+
+    @Inject
+    MyServiceImpl myService;
+
+    public void index() {
+        renderHtml("service:" + myService);
+    }
+      
+    public static void main(String[] args) {
+        Jboot.run(args);
+    }
+}
+在以上代码中，由于 MyServiceImpl 不是已经接口，而是一个类，此时无需在 MyServiceImpl 这个类上配置 @Bean 注解。
+
+当一个接口有多个实现类的时候，可以通过配合@Named配合进行注入，例如：
+
+public class AopDemo extends JbootController {
+
+    @Inject
+    CategoryService service;
+
+    @Inject
+    @Named("myCategory") //通过@Named指定使用哪个实现类
+    CategoryService nameservice;
+
+    public void index() {
+        renderHtml("service:" + service.hello("") 
+        + "<br /> nameservice:" + nameservice.hello(""));
+    }
+      
+    public static void main(String[] args) {
+        Jboot.run(args);
+    }
+}
+以下是实现类的代码：
+
+@Bean
+public class CategoryServiceImpl implements CategoryService {
+    @Override
+    public String hello(String text) {
+        return "CategoryServiceImpl say hello " + text;
+    }
+}
+@Bean(name = "myCategory")
+public class NamedCategoryServiceImpl implements CategoryService {
+    @Override
+    public String hello(String text) {
+        return "NamedCategoryServiceImpl say hello " + text;
+    }
+}
+两个类都实现了CategoryService接口，不同的是 NamedCategoryServiceImpl 实现类在配置 @Bean 的时候传了参数 
+name = "myCategory"，这样，注入的时候就可以配合 @Named 进行对实现类的选择。
+===============================================================================================================================
+===============================================================================================================================
+===============================================================================================================================
+===============================================================================================================================
+===============================权限=======权限==========权限==权限==权限==权限==权限====权限==权限=========================
+===============================================================================================================================
+===============================================================================================================================
+===============================================================================================================================
+===============================================================================================================================
+
+
+

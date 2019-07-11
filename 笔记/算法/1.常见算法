@@ -1,0 +1,9 @@
+1.斐波那契 [feibonaqie.cpp]
+    f1=1;f2=1;
+    for(i=2;i<num;i++){
+        sum=f1+f2;
+        f1=sum;
+    }
+2.存取款，每年有利息，四年取走所有的钱 [cunqukuan]
+
+3.贪心找零  [tailansuanfa]

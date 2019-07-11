@@ -1,0 +1,164 @@
+#include("/template/common/layout/_page_layout.html")
+#@layout()
+
+#define css()
+<style>
+
+</style>
+#end
+
+#define js()
+<script type="text/javascript">
+    layui.use(['form', 'layer','upload'], function () {
+        // 操作对象
+        var form = layui.form
+            , layer = layui.layer
+            , $ = layui.jquery
+            ,upload=layui.upload;
+        
+        
+        upload.render({
+            elem: '#test2'
+            ,url: '/service/order/postUpload'
+            ,multiple: true
+            ,before: function(obj){
+              //预读本地文件示例，不支持ie8
+              obj.preview(function(index, file, result){
+                $('#demo2').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
+              });
+            }
+            ,done: function(res){
+              //上传完毕
+            }
+          });
+            
+	var i ;
+        $.ajax({
+            url:'/institution/info/tableData',
+            dataType:'json',
+            type:'post',
+            success:function(data){
+         		console.log(data.data)
+                 $.each(data.data,function(index,item){
+                	 console.log(index)
+                	 console.log(item)
+               	
+                    $('#jselectID').append(new Option(item.institutionName,item.institutionName));//往下拉菜单里添加元素
+                })
+          
+                form.render();//菜单渲染 把内容加载进去
+            }
+        })
+
+		  $.ajax({
+            url:'/institution/detail/tableData',
+            dataType:'json',
+            type:'post',
+            success:function(data){
+         		console.log(data.data)
+                 $.each(data.data,function(index,item){
+                	 console.log(data.data+"+=========");
+                    $('#selectID').append(new Option(item.wdName,item.wdName));//往下拉菜单里添加元素
+                })
+          
+                form.render();//菜单渲染 把内容加载进去
+            }
+        })
+         
+        form.on('submit(sub)', function(data){
+
+            util.sendAjax ({
+                type: 'POST',
+                url: '#(ctxPath)/service/order/postAdd',
+                data: $('#addForm').serialize(),
+                loadFlag: true,
+                success : function(data){
+                    pop_close();
+                }
+            });
+
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+         
+    });
+
+</script>
+#end
+
+#define content()
+<div class="x-body">
+    <form id="addForm" class="layui-form" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label"><em class="require-mark">*</em>订单名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="serviceOrder.serviceOrderName" placeholder="订单名称" class="layui-input" value="" required  lay-verify="required" autocomplete="off"/>
+            </div>
+        </div>
+       <!--  <div class="layui-form-item">
+            <label class="layui-form-label"><em class="require-mark">*</em>服务机构</label>
+            <div class="layui-input-block">
+                <input type="text" name="serviceOrder.serviceOrderInstitution" placeholder="服务机构" class="layui-input" value="" required  lay-verify="required" autocomplete="off"/>
+            </div>
+        </div> -->
+	  <div class="layui-form-item">
+            <label class="layui-form-label"><em class="require-mark">*</em>服务机构</label>
+            <div class="layui-input-block">
+                <select id="jselectID" name="serviceOrder.serviceOrderInstitution" lay-verify="required">
+                </select>
+            </div>
+        </div> 
+         <div class="layui-form-item">
+            
+            <label class="layui-form-label"><em class="require-mark">*</em>网点</label>
+            <div class="layui-input-block" >
+                <select id="selectID" name="serviceOrder.wdName" onchange="func();" lay-verify="required">
+                </select>
+            </div>
+            <!-- <label class="layui-form-label"><em class="require-mark">*</em>机构网点</label>
+            <div class="layui-input-block">
+                <input type="text" name="serviceOrder.wdName" placeholder="机构网点" class="layui-input" value="" required  lay-verify="required" autocomplete="off"/>
+            </div> -->
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><em class="require-mark">*</em>甲方负责人</label>
+            <div class="layui-input-block">
+                <input type="text" name="serviceOrder.jiaOfficial" placeholder="甲方负责人" class="layui-input" value="" required  lay-verify="required" autocomplete="off"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><em class="require-mark">*</em>维修费用</label>
+            <div class="layui-input-block">
+                <input type="text" name="serviceOrder.repairCost" placeholder="维修费用" class="layui-input" value="" required  lay-verify="required" autocomplete="off"/>
+            </div>
+        </div>
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label"><em class="require-mark">*</em>下单类型</label>
+            <div class="layui-input-block">
+                <select id='status' name="serviceOrder.orderCategory" lay-verify="required">
+                    <option>自助下单</option>
+                    <option>平台下单</option>
+                   
+                </select>
+            </div>
+        </div> 
+        <div class="layui-form-item">
+          	<div class="layui-upload">
+  				<button type="button" class="layui-btn" id="test2">附件图片上传</button> 
+  				<blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+   			 		预览图：
+    			<div class="layui-upload-list" id="demo2"></div>
+ 			</blockquote>
+			</div>
+        </div>
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+            <button  class="layui-btn" lay-filter="sub" lay-submit>
+                保存
+            </button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </form>
+</div>
+#end

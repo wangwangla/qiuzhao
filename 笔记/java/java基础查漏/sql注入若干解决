@@ -1,0 +1,34 @@
+
+1.字符串匹配
+protected static boolean sqlValidate(String str) {  
+    str = str.toLowerCase();//统一转为小写
+    //String badStr = "and|exec";
+    String badStr = "'|and|exec|execute|insert|select|delete|update|count|drop|chr|mid|master|truncate|char|declare|sitename|net user|xp_cmdshell|or|like";  
+    /*String badStr = "'|and|exec|execute|insert|create|drop|table|from|grant|use|group_concat|column_name|" +  
+    "information_schema.columns|table_schema|union|where|select|delete|update|order|by|count|*|" +"chr|mid|master|truncate|char|declare|or|;|-|--|+|,|like|//|/|%|#";    */
+     
+      //过滤掉的sql关键字，可以手动添加           
+    String[] badStrs = badStr.split("\\|");          
+    for (int i = 0; i < badStrs.length; i++) {           
+         if (str.indexOf(badStrs[i]) !=-1) { 
+              System.out.println("匹配到："+badStrs[i]); 
+               return true;         
+        }  
+       }  
+        return false;  
+    }  
+
+2.其他方式：
+    ·对输入进行严格的限制和过滤
+    ·对一些应用如数据库的连接进行有效的IP限定
+    ·尽可能减少CGI程序中的系统调用
+    ·使用web扫描器预先扫描系统·
+    ·下载SQL通用防注入系统的程序，在需要防范注入的页面头部用<!--# include file=”xxx.asp”-- >来防止别人进行手动注入测试 （针对asp网页）
+    ·设置陷阱账号：设置两个帐号，一个是普通管理员帐号，一个是防注入的帐号。将防注入的账号设置的很象管理员，如 admin，
+    ·以制造假象吸引软件的检测，而密码是大于千字以上的中文字符，迫使软件分析账号的时候进入全负荷状态甚至资源耗尽而死机。 
+
+
+
+
+
+[目录](https://github.com/wangwangla/biji/tree/master/README.md)

@@ -1,0 +1,72 @@
+1.javascript的简介
+    是基于对象和事件驱动的语言，应用于客户端
+        基于对象
+            提供了好多对象，可以直接拿来使用
+        事件驱动
+            html做网站静态效果。js做动态页面
+        客户端指浏览器
+2.js的特点
+    交互性：信息的动态交互
+    安全性：js不能访问本地磁盘文件
+    跨平台：java里面跨平台，虚拟机
+            只有能够支持js的浏览器，都可以运行
+3.js和java的区别
+    java是sun公司
+    js基于对象，java面向对象
+    java是强类型语言，js是弱类型的语言      数据类型没有强制类型
+4.javascript的组成（下面js）
+	三部分组成
+	 （1）ECMAScript
+	    - ECMA : 欧洲计算机协会
+		- 有ECMA组织制定的js的语法，语句.....
+	 （2）BOM
+		- broswer object model: 浏览器对象模型
+	 （3）DOM
+		- document object model：文档对象模型
+5.js和html的结合方式
+    第一种：
+        使用一个标签<script type="text/javascript">js代码</script>
+    第二种：
+        使用script标签，引入一个外部的js文件
+        <script type="text/javascript" src="1.js"></script>
+
+        使用第二种方式时候，就不要在script标签里面写js代码了，不会执行。
+6.js的原始数据类型和声明变量
+    java的基本数据类型：byte short int long float double char boolean
+    弱类型，所以定义变量使用关键字var
+
+    js的原始数据类型
+        string:字符串
+            var str = "abc"
+        number:数字类型
+            var m = 123
+        boolean:true和false
+            var flag = true
+        null
+            var date = new Date（）;
+            获取对象的引用，null表示没有引用，所有的对象引用也是object
+        undifined:
+            定义一个变量，没有赋值
+        typeof（）：查看变量的数据类型
+7.js的对象
+    var cat=function(name,age){
+        this.name=name;
+        this.age=age;
+        this.run=function(){
+            document.write("ssssss");
+        }
+    }
+    new k  = new cat("",3)
+8.js的响应：
+    方式一：
+        onclick="test()"
+        <script>
+            function test(){
+                alert("XXXXXX");
+            }
+        </script>
+    方式二：   
+        onclick="test()"
+        <script src="xxx.js">
+        </script>
+   

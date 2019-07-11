@@ -1,0 +1,152 @@
+#coding:'utf-8'
+import requests
+import json
+import xlwt
+import time
+
+
+provinceList = ['北京市', '天津市', '河北省', '山西省',
+                '内蒙古自治区', '辽宁省', '吉林省','黑龙江省',
+                '上海市', '江苏省', '浙江省', '安徽省', '福建省',
+                '江西省', '山东省','河南省', '湖北省', '湖南省',
+                '广东省', '广西壮族自治区','海南省', '重庆市',
+                '四川省', '贵州省', '云南省', '西藏自治区', '陕西省',
+                '甘肃省', '青海省', '宁夏回族自治区', '新疆维吾尔自治区',
+                '台灣', '香港特别行>政区', '澳门特别行政区'];
+info = ['省','市','区','健身房场馆','联系电话','地址','经度','维度']
+i=0
+j=0
+
+for p in provinceList:
+    
+    i=0
+    j=0
+    sportInfo = xlwt.Workbook()
+    sheet = sportInfo.add_sheet('p')
+    for num in info:
+        sheet.write(0,i,num)
+        i=i+1
+    s=p
+    print(s)
+    urls=[]
+    for num in range(0,19):
+        url ='https://restapi.amap.com/v3/place/text?types=08010'+str(num)+'&city='+s+'&key=37b3781dfd1926ed67c18320fc387ead'
+        urls.append(url)
+    for url in urls:
+        print(url)
+        res = requests.get(url)
+        json_data = json.loads(res.text)
+        count = json_data['count']
+        # print(count,json_data)
+        if int(count) == 0:
+            break
+        pois = json_data['pois']
+#写入
+        for poi in pois:
+            j=j+1;
+            name = poi['name']
+            pname = poi['pname']
+            cityname = poi['cityname']
+            adname = poi['adname']
+            tel = poi['tel']
+            address = poi['address']
+            location = poi['location']
+            lon = location.split(',')[0]
+            lat = location.split(',')[1]
+            sheet.write(j,0,pname)
+            sheet.write(j,1,cityname)
+            sheet.write(j,2,adname)
+            sheet.write(j,3,name)
+            sheet.write(j,4,tel)
+            sheet.write(j,5,address)
+            sheet.write(j,6,lon)
+            sheet.write(j,7,lat)
+        time.sleep(0.01)
+        sportInfo.save(p+'.xls')
+    
+
+
+<div class="abstract-desc"><div class="list-item-desc-top">
+<a href="//www.meituan.com/yundongjianshen/163550990/" target="_blank" class="item-title">炙力工作室
+</a><div class="item-eval-info clearfix"><div class="rate-stars">
+<ul class="rate-stars-ul rate-stars-dark">
+<li><i class="iconfont icon-star_icon"></i></li>
+<li><i class="iconfont icon-star_icon"></i></li>
+<li><i class="iconfont icon-star_icon"></i></li>
+<li><i class="iconfont icon-star_icon"></i></li>
+<li><i class="iconfont icon-star_icon"></i></li></ul><ul class="rate-stars-ul rate-stars-light" style="width:70%"><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li></ul></div><span>3.5<!-- -->分</span><span class="highlight">5<!-- -->人评论</span></div><div class="item-site-info clearfix"><span>私教工作室<!-- -->|<!-- -->城东</span><span title="越城区人民东路1051号（尚1051文化创意园内）">越城区人民东路1051号（尚1051文化创意园内）</span><div class="item-site-map"><span>查看地图</span></div></div><div class="item-desc-ad"><span>广告</span></div><div class="list-item-tag"><div class="tag-group tag-group-small border"></div></div></div><div class="list-item-desc-bottom"><div class="item-discount"><div title="单次私教课程36元，36元/券，单人青少年特测，36元/券，单人体态评估"><img src="http://p1.meituan.net/groupop/af71bbba0c83b6693e9f52645bb1cf
+3c660.png"><span>单次私教课程36元，36元/券，单人青少年特测，36元/券，单人体态评估</span></div></div></div></div>
+
+
+icon"></i></li></ul>', '"><div class="list-item-desc-top">
+<a href="//www.meituan.com/yundongjianshen/68772302/" target="_blank" class="item-title">
+劲形健身</a><div class="item-eval-info clearfix">
+<div class="rate-stars"><ul class="rate-stars-ul rate-stars-dark"><li>
+<i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li>
+<i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li>
+<i class="iconfont icon-star_icon"></i></li></ul><ul class="rate-stars-ul rate-stars-light" style="width:100%"><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li></ul>', '"><div class="list-item-desc-top"><a href="//www.meituan.com/yundongjianshen/182593953/" target="_blank" class="item-title">100fit百飞特运动健身（漕溪路店）</a><div class="item-eval-info clearfix"><div class="rate-stars"><ul class="rate-stars-ul rate-stars-dark"><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li></ul><ul class="rate-stars-ul rate-stars-light" style="width:90%"><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li></ul>', '"><div class="list-item-desc-top"><a href="//www.meituan.com/yundongjianshen/433936/" target="_blank" class="item-title">8號撞球俱乐部（大华店）</a><div class="item-eval-info clearfix"><div class="rate-stars"><ul class="rate-stars-ul rate-stars-dark"><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li></ul><ul class="rate-stars-ul rate-stars-light" style="width:100%"><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li></ul>', '"><div class="list-item-desc-top"><a href="//www.meituan.com/yundongjianshen/1628112/" target="_blank" class="item-title">康美健身会所（大华店）</a><div class="item-eval-info clearfix"><div class="rate-stars"><ul class="rate-stars-ul rate-stars-dark"><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li></ul><ul class="rate-stars-ul rate-stars-light" style="width:76%"><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li></ul>', '"><div class="list-item-desc-top"><a href="//www.meituan.com/yundongjianshen/110660120/" target="_blank" class="item-title">Crazy Bear 健身搏击工作室</a><div class="item-eval-info clearfix"><div class="rate-stars"><ul class="rate-stars-ul rate-stars-dark"><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li></ul><ul class="rate-stars-ul rate-stars-light" style="width:80%"><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li></ul>', '"><div class="list-item-desc-top"><a href="//www.meituan.com/yundongjianshen/1628613/" target="_blank" class="item-title">贝菲特健身（徐泾店）</a><div class="item-eval-info clearfix"><div class="rate-stars"><ul class="rate-stars-ul rate-stars-dark"><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li></ul><ul class="rate-stars-ul rate-stars-light" style="width:70%"><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li></ul>', '"><div class="list-item-desc-top"><a href="//www.meituan.com/yundongjianshen/494762/" target="_blank" class="item-title">丁俊晖台球俱乐部（大连路店）</a><div class="item-eval-info clearfix"><div class="rate-stars"><ul class="rate-stars-ul rate-stars-dark"><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li></ul><ul class="rate-stars-ul rate-stars-light" style="width:100%"><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li></ul>', '"><div class="list-item-desc-top"><a href="//www.meituan.com/yundongjianshen/183971133/" target="_blank" class="item-title">中田健身工作室（河南北路店）</a><div class="item-eval-info clearfix"><div class="rate-stars"><ul class="rate-stars-ul rate-stars-dark"><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li></ul><ul class="rate-stars-ul rate-stars-light" style="width:90%"><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li></ul>', '"><div class="list-item-desc-top"><a href="//www.meituan.com/yundongjianshen/40988023/" target="_blank" class="item-title">攀王室内攀岩</a><div class="item-eval-info clearfix"><div class="rate-stars"><ul class="rate-stars-ul rate-stars-dark"><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li></ul><ul class="rate-stars-ul rate-stars-light" style="width:92%"><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li></ul>', '"><div class="list-item-desc-top"><a href="//www.meituan.com/yundongjianshen/62817610/" target="_blank" class="item-title">iFitMax极健身工作室（南京西路店）</a><div class="item-eval-info clearfix"><div class="rate-stars"><ul class="rate-stars-ul rate-stars-dark"><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li></ul><ul class="rate-stars-ul rate-stars-light" style="width:100%"><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li></ul>', '"><div class="list-item-desc-top"><a href="//www.meituan.com/yundongjianshen/164194254/" target="_blank" class="item-title">TA-TrainingAbility训能健身私教工作室（歌斐中心店）</a><div class="item-eval-info clearfix"><div class="rate-stars"><ul class="rate-stars-ul rate-stars-dark"><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li></ul><ul class="rate-stars-ul rate-stars-light" style="width:100%"><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li></ul>', '"><div class="list-item-desc-top"><a href="//www.meituan.com/yundongjianshen/404449/" target="_blank" class="item-title">星之健身（张江店）</a><div class="item-eval-info clearfix"><div class="rate-stars"><ul class="rate-stars-ul rate-stars-dark"><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li></ul><ul class="rate-stars-ul rate-stars-light" style="width:90%"><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></l
+i><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li></ul>']
+
+
+
+
+
+<ul class="rate-stars-ul rate-stars-dark">
+    <li>
+        <i class="iconfont icon-star_icon">
+        </i>
+    </li>
+    <li>
+        <i class="iconfont icon-star_icon">
+        </i>
+    </li>
+    <li>
+        <i class="iconfont icon-star_icon"></i>
+    </li>
+    <li>
+        <i class="iconfont icon-star_icon"></i>
+    </li>
+    <li><i class="iconfont icon-star_icon"></i>
+    </li>
+        </ul>
+            <ul class="rate-stars-ul rate-stars-light" style="width:100%">
+            <li>
+                <i class="iconfont icon-star_icon">
+               </i>
+            </li>
+            <li>
+                <i class="iconfont icon-star_icon">
+                </i></li>
+                <li>
+                <i class="iconfont icon-star_icon"></i>
+</li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li>
+</ul>', '"><div class="list-item-desc-top"><a href="//www.meituan.com/yundongjianshen/1628112/" target="_blank" 
+class="item-title">康美健身会所（大华店）</a><div class="item-eval-info clearfix"><div class="rate-stars">
+<ul class="rate-stars-ul rate-stars-dark"><li><i class="iconfont icon-star_icon"></i></li><li>
+<i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li>
+<i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li></ul>
+<ul class="rate-stars-ul rate-stars-light" style="width:76%"><li><i class="iconfont icon-star_icon">
+</i></li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i>
+</li><li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li>
+</ul>', '"><div class="list-item-desc-top">、
+<a href="//www.meituan.com/yundongjianshen/110660120/" target="_blank" class="item-title">C
+
+
+
+<div class="abstract-item clearfix">
+<a class="abstract-pic grey" href="//www.meituan.com/yundongjianshen/163550990/" style="width:220px;height:126px" 
+target="_blank"><span>1</span><div
+><img src="//p1.meituan.net/joymerchant/5335849304129870892-30855602-1533729010457.jpg@220w_126h_1e_1c"
+ class="image"></div></a><div class="abstract-desc">
+ <div class="list-item-desc-top">
+ <a href="//www.meituan.com/yundongjianshen/163550990/" target="_blank" class="item-title">炙力工作室
+ </a><div class="item-eval-info clearfix"><div class="rate-stars"><ul class="rate-stars-ul rate-stars-dark">
+ <li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li>
+ <i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li>
+ <i class="iconfont icon-star_icon"></i></li></ul><ul class="rate-stars-ul rate-stars-light" style="width:70%"><
+ li><i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li>
+ <i class="iconfont icon-star_icon"></i></li><li><i class="iconfont icon-star_icon"></i></li><li>
+ <i class="iconfont icon-star_icon"></i></li></ul></div><span>3.5<!-- -->分</span><span class="highlight">5
+ <!-- -->人评论</span></div><div class="item-site-info clearfix"><span>私教工作室<!-- -->|<!-- -->城东
+ </span><span title="越城区人民东路1051号（尚1051文化创意园内）">越城区人民东路1051号（尚1051文化创意园内）</span><div class="item-site-map"><span>查看地图</span></div></div><div class="item-desc-ad"><span>广告</span></div><div class="list-item-tag"><div class="tag-group tag-group-small border"></div></div></div><div class="list-item-desc-bottom"><div class="item-discount"><div title="单次私教课程36元，36元/券，单人青少年特测，36元/券，单人体态评估"><img src="http://p1.meituan.net/groupop/af71bbba0c83b6693e9f52645bb1cf3c660.png">
+<span>单次私教课程36元，36元/券，单人青少年特测，36元/券，单人体态评估</span></div></div></div></div></div>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html >
+	<head>
+		<meta charset="UTF-8">
+		<title>事件的使用</title>
+		<script src="../lib/angular.min.js"></script>
+	</head>
+	<body ng-app="App">
+		<div ng-controller="Demo03Controller">
+			<button ng-click="show()">点击事件</button>
+		</div>
+		<script>
+			var App = angular.module('App',[]);
+			App.controller("Demo03Controller",['$scope',function($scope){
+				$scope.show = function(){
+					alert("ss");
+				}
+			}]);
+		</script>
+	</body>
+</html>

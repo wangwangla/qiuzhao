@@ -1,0 +1,37 @@
+liunx的信号是中断实现的
+1.使用shell脚本实现信号的操作
+    （1）打印字符串
+        #!/bin/bash
+        while((1))
+        do
+            echo "XXXXXXXXX"
+            sleep 1
+        done
+
+    (2)查看进程
+        #!/bin/bash
+        echo ps -ef|grep XX
+    （3）后台运行符介绍
+        &，在运行指令的最后加上他就可以了
+2.进程的控制：
+    常见的控制有三种：
+        使用jobs命令
+            jobs显示当前的任务，不同的参数，会有不同的显示结果
+                -l：进程ID
+                -n:只列出自从上次用户修改状态后的进程信息
+                -r:只列出状态为running的任务
+                -s：只列出状态是stopping的任务
+        通过fg各bg命令
+            fg是将进程从后台拉倒前台
+            bg一般和ctrl+Z【前台】一起使用 ，都是暂停，bg可以恢复
+        通过键盘输入
+
+3.假后台【名字是我起的】：虽然在后台运行，但是只要我关闭了中断，程序就会自己停止下来
+    如果要实现真正的后台，可以使nohup命令
+    正确的打开方式：nohup 命令 &
+    
+
+
+
+
+[目录](https://github.com/wangwangla/biji/tree/master/README.md)

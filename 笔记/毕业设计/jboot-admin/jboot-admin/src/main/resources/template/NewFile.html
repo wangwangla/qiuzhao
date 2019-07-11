@@ -1,0 +1,148 @@
+#include("/template/common/layout/_page_layout.html")
+#@layout()
+
+#define css()
+<style>
+
+</style>
+#end
+
+#define js()
+<script type="text/javascript">
+    layui.use(['table', 'layer'], function () {
+        var table = layui.table
+            , layer = layui.layer
+            , $ = layui.jquery
+            , form = layui.form;
+
+        // 表格渲染
+        var tableIns = table.render({
+            elem: '#dateTable'                  //指定原始表格元素选择器（推荐id选择器）
+            , id: 'dateTable'
+            , even: true //开启隔行背景
+            , size: 'sm' //小尺寸的表格
+            , height: 'full-150'    //容器高度
+            , cols: [[                  //标题栏
+                 {field: 'serviceOrderId', title: 'ID', width: 160}
+                , {field: 'serviceOrderName', title: '订单名称', width: 160}
+                , {field: 'serviceOrderInstitution', title: '服务机构', width: 120}
+                , {field: 'wdName', title: '机构网点', width: 120}
+                , {field: 'jiaOfficial', title: '甲方负责人', width: 120}
+                , {field: 'serviceOrderStartTime', title: '下单时间', width: 180}
+                , {field: 'repairCost', title: '维修费用', width: 100}
+                , {field: 'orderCategory', title: '下单类型', width: 160}
+                , {field: 'orderWorkTime', title: '派遣时间', width: 180}
+                , {field: 'orderFinshTime', title: '维修完工时间', width: 180}
+                , {field: 'orderStatus', title: '状态', width: 120}
+                , {fixed: 'right', title: '操作', width: 180, align: 'center', toolbar: '#barOption'} //这里的toolbar值是模板元素的选择器
+                
+             ]]
+            , url: '#(ctxPath)/service/order/findByWdName?id=#(data)'
+            , method: 'get'
+            , request: {
+                pageName: 'pageNumber' //页码的参数名称，默认：page
+                ,limitName: 'pageSize' //每页数据量的参数名，默认：limit
+            }
+            , page: true
+            , limits: [30, 60, 90, 150, 300]
+            , limit: 30 //默认采用30
+            , loading: true
+            , done: function (res, curr, count) {
+            }
+        });
+
+        table.on('tool(dateTable)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    util.sendAjax ({
+                        type: 'POST',
+                        url: '#(ctxPath)/service/order/detail?id=#(data)',
+                        data: {id : data.serviceOrderId},
+                        loadFlag: true,
+                        success : function(data){
+                            layer.close(index);
+                            reloadTableQuery();
+                        },
+                        unSuccess: function (data) {
+                            layer.close(index);
+                        }
+                    })
+                });
+            } else if(obj.event === 'edit'){
+                pop_show('编辑数据','#(ctxPath)/service/order/update?id=' + data.serviceOrderId,'','', function(){
+                    reloadTableQuery();
+                });
+            }
+            else if(obj.event === 'fujian'){
+                pop_show('订单附件','#(ctxPath)/service/order/hetong?id=' + data.serviceOrderId,'','', function(){
+                    reloadTableQuery();
+                });
+            } 
+            
+        });
+
+        $("#add").click(function(){
+            pop_show('添加数据','#(ctxPath)/service/order/add','','', function(){
+                reloadTableQuery();
+            });
+        });
+
+        $("#cache").click(function(){
+            layer.confirm('确定刷新数据缓存吗', function(index){
+                util.sendAjax ({
+                    type: 'POST',
+                    url: '#(ctxPath)/service/order/cache',
+                    data: {},
+                    loadFlag: true,
+                    success : function(data){
+                        layer.close(index);
+                    },
+                    unSuccess: function (data) {
+                        layer.close(index);
+                    }
+                });
+            });
+        });
+
+        reloadTableQuery = function () {
+            table.reload('dateTable', {
+                url: '#(ctxPath)/service/order/detail?id=#(data)'
+              //设定异步数据接口的额外参数
+            });
+        }
+
+        reloadTable = function (type, typeDesc) {
+            table.reload('dateTable', {
+                url: '#(ctxPath)/service/order/detail?id=#(data)'
+                  //设定异步数据接口的额外参数
+            });
+        }
+
+        form.on('submit(search)', function(data){
+            reloadTable(data.field.type, data.field.typeDesc);
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+    });
+</script>
+#end
+
+#define content()
+    <div class="layui-fluid">
+        <hr>
+        <div class="layui-row">
+            <div class="layui-btn-group">
+                <button id="add" class="layui-btn layui-btn-small">添加数据</button>
+            </div>
+            <div class="layui-btn-group">
+                <button id="cache" class="layui-btn layui-btn-small">刷新缓存</button>
+            </div>
+            <table id="dateTable" lay-filter="dateTable"></table>
+        </div>
+    </div>
+<script type="text/html" id="barOption">
+
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="fujian">订单附件</a>
+</script>
+#end

@@ -1,0 +1,73 @@
+在编程语言中，一般的逻辑表达式做我分支结构的执行条件
+当为真的时候，，某些执行，当某些为假的时候，有些执行。
+liunx中使用测试命令，该命令用于测试某些条件或者某个条件是否真实
+
+1.测试命令的结构
+    一般地，逻辑表达式结果为真的时候，返回值非0，为假的时候为0
+    shell中为真是0，为假是非0
+
+2.命令使用
+    test expression  该表达式可以是一个数字、字符串、文本、文件属性，还可以是算术等
+    除了使用test命令以外，还有一种结构也可以用来测试命令，这种方法一般形式如下
+    [expression]
+    [是启动测试，在后面有一个]与之匹配
+
+3.测试文件的类型
+    测试文件的类型，可以是存在等
+    -e 判断文件是否存在             test -e test.txt
+    -f 判断是否为文件类型           test -f test.txt 
+    -d 是否是目录                  test -d 
+    -c 是否字符设备文件
+    -S 判断文件是否是Socket文件
+    -p 是否是管道文件
+    -L 是否链接文件
+
+10.if分支结构
+    if -then结构
+    if expression
+    then
+    commands
+    fi
+
+    如果表达式为真，expression，那么就会执行commands，否则执行fi后面的语句，
+    在执行的过程中，表达式不可以使用[]
+    
+11.if - then - else 
+    if expression 
+    then
+        commands
+    else
+        commands
+    fi
+
+12.if的嵌套
+    if expression
+    then
+        if expression
+        then
+        commands
+        fi
+    commands
+    fi
+
+13.case
+    case 变量 in 
+    patten01 输入数据为1;;
+    patten01 输入数据为1;;
+    patten01 输入数据为1;;
+    patten01 输入数据为1;;
+    patten01 输入数据为1;;
+    esac;
+    echo case 结构运行结束
+
+14.select的语法
+    select 变量 in 列表
+    do
+        命令
+    done
+
+
+
+
+    
+[目录](https://github.com/wangwangla/biji/tree/master/README.md)

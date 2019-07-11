@@ -1,0 +1,68 @@
+grep的基本使用方式以及常用选项
+grep命令和正则表达式的协同使用
+grep命令和系统命令的协同
+1、grep是什么？
+    文本速索工具
+    使用于文本检索、文件查找、特定内容查找
+2、语法：
+    grep [选项] [匹配文件样本] [文件列表]
+3.查找然后不使用文件名，可以使用‘-’来代替，那么grep指令会从标准输出失败读取数据进行匹配
+    举例：查找本目录下的文件
+    grep Xx.sh ./    grep 文件样本 列表
+    找到输出，找不到不输出
+
+    多次使用grep，逐渐减少范围
+    ls -l|grep XX.sh
+4、grep的选项
+    grep命令和一些选项使用，从而可以使得查找更加灵活
+    grep命令如下：
+        -c:只输出匹配行数，不显示内容
+        -i:不区分大小写
+        -h:查询多文件不显示文件名
+        -n：显示匹配行
+        -s:不显示不存在或者无匹配的文本的错误xx
+        -v:显示不匹配的所有行
+5.大小写敏感：grep 'h' 'H' test.txt,但是如果字符特多就不那么容易，这个时候可以使用-l
+忽略大小写
+6.反向匹配：
+    -v : grep -v "cc" test.sh
+7.查询多个文件或者多个关键字
+    ls -l | grep xx
+    grep “Hello|hello” xx
+8.grep与正则
+9.常见的匹配
+    （1）[[:upper:]]       [A-Z]
+    （2）[[:lower:]]       [a-z]
+    （3）[[:digit:]]       [0-9]
+    （4）[[:alnumn:]]      [0-9a-zA-Z]
+    （5）[[:space:]]       空格|TAB
+    （6）[[:alpha:]]       [a-zA-Z]
+
+举例：
+    gerp "#[[:upper:]]" XXX
+    grep "H[[:alpha:]][[:alnumn:]]" XXX
+
+举例：
+    （1）只显示行号
+    （2）grep -c “XXX” xx.txt
+
+10.egrep：速索一个或者多个文件，可以任意速索文件中的字符串和符号
+    格式：egrep [选项][匹配摸版][查找文件]
+
+11.实例:
+    ls -l | grep XX.sh  查找XX.sh文件
+    ls -l | grep XX.sh |grep "string"  查找XX.sh文件,查找文件中的string
+
+    ===================
+
+    ps查找进程
+    ps -ef | grep *i*
+    ps -ef | grep i*
+    ps -ef | grep init
+    
+
+
+
+
+
+[目录](https://github.com/wangwangla/biji/tree/master/README.md)

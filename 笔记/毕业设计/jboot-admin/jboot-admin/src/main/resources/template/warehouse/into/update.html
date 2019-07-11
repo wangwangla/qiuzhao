@@ -1,0 +1,96 @@
+#include("/template/common/layout/_page_layout.html")
+#@layout()
+
+#define css()
+<style>
+
+</style>
+#end
+
+#define js()
+<script type="text/javascript">
+    layui.use(['form', 'layer','laydate'], function () {
+        // 操作对象
+        var form = layui.form
+            , layer = layui.layer
+            , $ = layui.jquery;
+        var laydate = layui.laydate;
+        
+    	laydate.render({
+			elem:'#date'
+		});
+        form.on('submit(sub)', function(data){
+
+            util.sendAjax ({
+                type: 'POST',
+                url: '#(ctxPath)/warehouse/into/postUpdate',
+                data: $('#addForm').serialize(),
+                loadFlag: true,
+                success : function(data){
+                    pop_close();
+                }
+            });
+
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+    });
+</script>
+#end
+
+#define content()
+<div class="x-body">
+    <form id="addForm" class="layui-form" action="">
+        <input type="hidden" name="warehouseInto.eqiupId" value="#(data.eqiupId)">
+       <div class="layui-form-item">
+            <label class="layui-form-label"><em class="require-mark">*</em>设备类型</label>
+            <div class="layui-input-block">
+                <input type="text" name="warehouseInto.eqiupType" placeholder="设备类型" class="layui-input" value="#(data.eqiupType)" required  lay-verify="required" autocomplete="off"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><em class="require-mark">*</em>设备型号</label>
+            <div class="layui-input-block">
+                <input type="text" name="warehouseInto.eqiupXinghao" placeholder="设备型号" class="layui-input" value="#(data.eqiupXinghao)" required  lay-verify="required" autocomplete="off"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><em class="require-mark">*</em>设备名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="warehouseInto.eqiupName" placeholder="设备名称" class="layui-input" value="#(data.eqiupName)" required  lay-verify="required" autocomplete="off"/>
+            </div>
+        </div>
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label"><em class="require-mark">*</em>单价</label>
+            <div class="layui-input-block">
+                <input type="text" name="warehouseInto.unitPrice" placeholder="单价" class="layui-input" value="#(data.unitPrice)" required  lay-verify="required" autocomplete="off"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><em class="require-mark">*</em>状态</label>
+            <div class="layui-input-block">
+                <input type="text" name="warehouseInto.equipStatus" placeholder="状态" class="layui-input" value="#(data.equipStatus)" required  lay-verify="required" autocomplete="off"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><em class="require-mark">*</em>领取人</label>
+            <div class="layui-input-block">
+                <input type="text" name="warehouseInto.equipLqLead" placeholder="领取人" class="layui-input" value="#(data.equipLqLead)" required  lay-verify="required" autocomplete="off"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><em class="require-mark">*</em>领取时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="warehouseInto.equipDate" id="date" placeholder="领取时间" class="layui-input" value="#(data.equipDate)" required  lay-verify="required" autocomplete="off"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+            <button  class="layui-btn" lay-filter="sub" lay-submit>
+                保存
+            </button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </form>
+</div>
+#end

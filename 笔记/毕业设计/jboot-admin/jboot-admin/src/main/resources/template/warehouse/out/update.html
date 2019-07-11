@@ -1,0 +1,123 @@
+#include("/template/common/layout/_page_layout.html")
+#@layout()
+
+#define css()
+<style>
+
+</style>
+#end
+
+#define js()
+<script type="text/javascript">
+    layui.use(['form', 'layer','upload'], function () {
+        // 操作对象
+        var form = layui.form
+            , layer = layui.layer
+            , $ = layui.jquery
+            , upload=layui.upload;
+        
+        upload.render({
+            elem: '#test2'
+            ,url: '/warehouse/out/postUpload?id=#(data.equipId)'
+            ,multiple: true
+            ,before: function(obj){
+              //预读本地文件示例，不支持ie8
+              obj.preview(function(index, file, result){
+                $('#demo2').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
+              });
+            }
+            ,done: function(res){
+              //上传完毕
+            }
+          });
+
+        form.on('submit(sub)', function(data){
+
+            util.sendAjax ({
+                type: 'POST',
+                url: '#(ctxPath)/warehouse/out/postUpdate',
+                data: $('#addForm').serialize(),
+                loadFlag: true,
+                success : function(data){
+                    pop_close();
+                }
+            });
+
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+    });
+</script>
+#end
+
+#define content()
+<div class="x-body">
+    <form id="addForm" class="layui-form" action="">
+    <input type="hidden" name="warehouseout.equipId" value="#(data.equipId)">
+         <div class="layui-form-item">
+            <label class="layui-form-label"><em class="require-mark">*</em>设备类型</label>
+            <div class="layui-input-block">
+                <input type="text" name="warehouseout.equipType" placeholder="设备类型" class="layui-input" value=" #(data.equipId)" required  lay-verify="required" autocomplete="off"/>
+            </div>
+        </div>
+       
+        <div class="layui-form-item">
+            <label class="layui-form-label"><em class="require-mark">*</em>设备型号</label>
+            <div class="layui-input-block">
+                <input type="text" name="warehouseout.equipXinghao" placeholder="设备型号" class="layui-input" value="#(data.equipXinghao)" required  lay-verify="required" autocomplete="off"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><em class="require-mark">*</em>设备名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="warehouseout.equipName" placeholder="设备名称" class="layui-input" value="#(data.equipName)" required  lay-verify="required" autocomplete="off"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><em class="require-mark">*</em>入库时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="warehouseout.equipInDate" id="date" placeholder="入库时间" class="layui-input" value="#(data.equipInDate)" required  lay-verify="required" autocomplete="off"/>
+            </div>
+        </div>
+    
+        <div class="layui-form-item">
+            <label class="layui-form-label"><em class="require-mark">*</em>状态</label>
+            <div class="layui-input-block">
+                <input type="text" name="warehouseout.equipStatus" placeholder="状态" class="layui-input" value="#(data.equipStatus)" required  lay-verify="required" autocomplete="off"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><em class="require-mark">*</em>领取人</label>
+            <div class="layui-input-block">
+                <input type="text" name="warehouseout.equipLqLead" placeholder="领取人" class="layui-input" value="#(data.equipLqLead)" required  lay-verify="required" autocomplete="off"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><em class="require-mark">*</em>领取时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="warehouseout.equipOutDate" id="date"  placeholder="领取时间" class="layui-input" value="#(data.equipOutDate)" required  lay-verify="required" autocomplete="off"/>
+            </div>
+        </div>
+        
+        
+                        <div class="layui-form-item">
+          <div class="layui-upload">
+  <button type="button" class="layui-btn" id="test2">合同图片上传</button> 
+  
+  <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+    预览图：
+    <div class="layui-upload-list" id="demo2"></div>
+ </blockquote>
+</div>
+        </div>
+        
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+            <button  class="layui-btn" lay-filter="sub" lay-submit>
+                保存
+            </button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </form>
+</div>
+#end

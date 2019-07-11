@@ -1,0 +1,41 @@
+#include("/template/common/layout/_page_layout.html")
+#@layout()
+
+#define css()
+<style>
+
+</style>
+#end
+
+#define js()
+<script type="text/javascript">
+    layui.use(['table', 'layer'], function () {
+        var table = layui.table
+            , layer = layui.layer
+            , $ = layui.jquery
+            , form = layui.form;
+        var basePath = "http://118.24.235.237/"
+        $.ajax({url:"/service/order/load?id=#(data)",success:function(result){
+        	var htmlte  ="";    
+       	  	$.each(result.data, function(i, item){      
+       	  	console.log(item.imagePath)
+       	     var ht ="<img src = '"+basePath+item.orderEnclosurePhoto+"'/>"
+       	  	htmlte= htmlte+ht;
+       	 
+			});  
+       	 console.log(htmlte)
+       	 $("#div1").html(htmlte);   
+        	
+        }});
+    });
+</script>
+#end
+
+
+#define content()
+    
+<div id="div1"></div>
+<script type="text/html" id="barOption">
+ 
+</script>
+#end

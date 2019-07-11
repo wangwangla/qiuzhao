@@ -1,0 +1,101 @@
+#include("/template/common/layout/_page_layout.html")
+#@layout()
+
+#define css()
+<style>
+
+</style>
+#end
+
+#define js()
+<script src="//cdn.bootcss.com/echarts/4.0.2/echarts.min.js"></script>
+        <script src="//cdn.bootcss.com/echarts/4.0.2/extension/bmap.min.js"></script>
+
+<script type="text/javascript">
+	window.onload = function(){
+		$.ajax({
+			type:"get",
+			url:"/institution/info/tableData",
+			
+			success:function(data,textStatus,jqXHR){
+				var lhtml  = "";
+				
+                 var jsondata = new Array();
+				
+				for(var i = 0; i < data.data.length;i++)
+				{
+					console.log(data.data[i]);
+					lhtml=lhtml+'<div class="layui-col-md3"><div align="center"><img src="http://118.24.235.237/'+data.data[i].institutionLogo+'" width="130px" height="130px" align="center"/><p align="center">'+data.data[i].institutionName+'</p><p><a  href="/institution/detail/detailview?id='+data.data[i].institutionId+'" class="add layui-btn layui-btn-xs"">网点详情</a></p></div></div></div>';
+					jsondata[i] = {value:data.data[i].institutionWdId,name:data.data[i].institutionName}
+					console.log(data.data[i].institutionWdId);
+				}
+				console.log(jsondata);
+				$("#listinfo").html(lhtml);
+				var myChart = echarts.init(document.getElementById('main'));
+
+				 option = {
+	                        title : {
+	                            text: '机构维修次数',
+	                            subtext: '纯属虚构',
+	                            x:'center'
+	                        },
+	                        tooltip : {
+	                            trigger: 'item',
+	                            formatter: "{a} <br/>{b} : {c} ({d}%)"
+	                        },
+	                        legend: {
+	                            orient: 'vertical',
+	                            left: 'left',
+	                            data: jsondata
+	                        },
+	                        series : [
+	                            {
+	                                name: '机构名称',
+	                                type: 'pie',
+	                                radius : '55%',
+	                                center: ['50%', '60%'],
+	                                data:jsondata,
+	                                itemStyle: {
+	                                    emphasis: {
+	                                        shadowBlur: 10,
+	                                        shadowOffsetX: 0,
+	                                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+	                                    }
+	                                }
+	                            }
+	                        ]
+	                    };
+
+		            // 使用刚指定的配置项和数据显示图表。
+		            myChart.setOption(option);
+			},error:function(XMLHttpRequest,textStatus,errorThrown){
+				}
+		});	
+	}
+	     
+	  layui.use(['table', 'layer'], function () {
+	        var table = layui.table
+	            , layer = layui.layer
+	            , $ = layui.jquery
+	            , form = layui.form;
+	        $(".edit").click(function(){
+	        	 pop_show('编辑数据','#(ctxPath)/institution/detail/update?id=','','', function(){
+	                    reloadTableQuery();
+	                });
+	        });
+	
+
+	    });
+	</script>
+#end
+
+#define content()
+
+	<div class="layui-col-md8" style="float:left" id="listinfo" >
+	
+	</div>
+	<div class="layui-col-md4" style="float:right ;position:fixed;right:4px;margin:40px">
+		<div id="main" style="height:400px;></div>
+	</div>
+	
+#end

@@ -1,0 +1,12 @@
+import requests
+import json
+url = "http://restapi.amap.com/v3/config/district?key=37b3781dfd1926ed67c18320fc387ead&types=190102"
+res = requests.get(url)
+json_data = json.loads(res.text)
+#print(json_data['districts'][0]['name'])
+list_info=json_data['districts'];
+infos=list_info[0]['districts']
+for info in infos:
+    name=info['name']
+    #爬出了名字
+    print(name)

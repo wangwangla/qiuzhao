@@ -1,0 +1,14 @@
+1.什么是shell？
+    他是liunx系统中，类似于一个壳，用来保护内核，是用户和内核中间的部分，用户操作先到shell，然后在达到内核，内核的响应也是先到达shell，然后在返回用户可以
+    识别的东西，显示给用户。
+2.shell有两层定义
+    一个是shell解释器，用来将用户的输入命令解释成为内核可以看懂的语言，并转为用户可以看懂的信息
+    另一个是shell脚本，可以理解为一种语言，在shell定义变量、各种内置参数等
+3.shell命令的格式介绍
+    [root@localhost kangwang]#
+    普通用户：$
+    超级用户：~
+    
+
+
+[目录](https://github.com/wangwangla/biji/tree/master/README.md)

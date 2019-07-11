@@ -1,0 +1,151 @@
+1.创建的格式：
+    方式一：
+    function name
+    {
+        commands;
+    }
+    name是函数的名字，在一个脚本中是唯一的
+    commands：一条到多台指令组成的。
+    方式二：
+    name(){
+        commands;
+    }
+    使用（）取代了function关键字
+    创建的函数可以在脚本的任意地方进行调用
+2.举例：
+    #!/bin/bash
+    echo "shell脚本中使用函数"
+    echo "使用命令function创建"
+    function fun1
+    {
+        echo “使用function创建测试”
+    }
+
+    使用的时候需要注意：
+        括号要在下一行中写
+    
+    echo "调用函数fun1"
+    fun1
+    function fun2{
+        echo “使用()创建测试”
+    }
+
+    注意：这句是执行不过的
+    首先括号的位置
+    括号是特殊字符，不可以随便写的
+
+    echo "调用函数fun2使用()"
+    fun2
+    使用函数的时候在函数调用之前，必须创建函数，如未创建，就会发生错误。
+    举例：
+    #!/bin/bash 
+    echo "未创建的时候执行调用"
+    fun1
+    function fun1{
+        echo "tsest";
+    }
+    举例：
+    [root@localhost kangwang]# vi test25.sh
+    #!/bin/bash
+    echo "test"
+    fun1
+    fun1()
+    {
+            echo "test"
+    }
+
+    [root@localhost kangwang]# ./test25.sh 
+    test
+    ./test25.sh: line 3: fun1: command not found
+3.函数的参数
+    在编程语言中，在函数调用的时候可以添加参数，这些参数一般是在函数运行是才确定具体数值的，在函数中业额可以传递参数
+    但是必须由标准参数变量表示并由命令行传递参数给函数的参数
+    $0:表示函数名
+    $num:表示传递的第几个参数
+    举例：
+    #!/bin/bash
+    echo "在函数fun中使用函数参数"
+    fun(){
+        echo "传入参数个数：$#";
+        echo "函数名是：$0"
+    }
+    echo "又参数的函数调用"
+    fun 1 2  3 4 5 6
+    fun "a" "b" "c"
+4.函数的返回值
+    返回值表示其计算后的返回结果
+    举例：
+    #!/bin/bash
+    echo "返回普通命令的返回值"
+    ls /home
+    echo "正确执行命令ls后返回值：$?"
+    ls /no_exist
+    echo "错误执行ls后返回值#?"
+
+    =============
+    [root@localhost kangwang]# ./test27.sh 
+    返回普通命令的返回值
+    kangwang  tomcat  vagrant
+    正确执行命令ls后返回值：0
+    ls: cannot access /no_exist: No such file or directory
+    错误执行ls后返回值#?
+
+
+5.函数的默认返回值
+    默认返回值是最后一条命令的返回值，当函数执行完毕之后，会将最后一条的结果返回，#？可以用来获取
+    #!/bin/bash
+    echo "获取默认返回值"
+    fun1{
+        echo "最后一条指令执行正确"
+        echo "hello"
+    }
+    fun1
+    echo "函数的返回值：$?"
+    fun2{
+        echo "最后一条执行错误"
+        ls /ee
+    }
+    fun2
+    echo "函数fun2的返回值为:$?"
+
+    执行正确结果为0 ，如果执行失败，返回值为2
+
+5.return命令的使用
+    shell脚本中，默认返回值之外，return一般用来返回特定的数据
+    return value;
+    返回值必须是在0~255之间，如果大于255，那么就会使用其他值代替。
+6.使用函数的返回值
+   
+7.函数中的全局变量和局部变量
+8.数组的操作
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+[目录](https://github.com/wangwangla/biji/tree/master/README.md)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

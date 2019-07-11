@@ -1,0 +1,13 @@
+停止MySQL
+1添加删除程序中卸载MySQL
+2到安装目录删除MySQL
+3删除：C:\Documents and Settings\All Users\Application Data\MySQL
+	   C:\ProgramData\MySQL
+4查看注册表：
+regedit
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services
+HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Services
+HKEY_LOCAL_MACHINE\SYSTEM\ControlSet002\Services
+搜索mysql，找到一律干掉！
+============================
+需要重启电脑(win xp)，直接重新安装即可

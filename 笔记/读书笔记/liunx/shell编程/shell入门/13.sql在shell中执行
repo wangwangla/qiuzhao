@@ -1,0 +1,23 @@
+1.使用shell脚本执行数据语句
+    方式一：
+        #！/bin/bash
+        echo ‘连接数据库’
+        mysql -u xxx -p xxx
+        eho '执行语句'
+        mysql -e “select *from xxx”   #在脚本中执行SQL需要加上-e来实现语句的增加
+        #创建数据库
+        mysql -e “${sql}”
+    方式二:
+        #！/bin/bash
+
+        selectsql=“select *from xxx”
+        echo ‘连接数据库’
+        mysql -u xxx -p xxx
+        eho '执行语句'
+        mysql -e "${selectsql}"   #在脚本中执行SQL需要加上-e来实现语句的增加
+       
+
+
+
+
+[目录](https://github.com/wangwangla/biji/tree/master/README.md)

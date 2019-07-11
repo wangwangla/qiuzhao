@@ -1,0 +1,55 @@
+1.标题
+2.表单
+    ·输入框：<input type="text" placeholder="输入用户名：" />
+	    支持控件：text、password、datatime、datatime-local、date、month、time、week、number、email、url、search、tel和color
+			password：<input type="password" placeholder=""/>
+            datatime:<input type="datatime" placeholder=""/>
+            datatime-local:<input type="datatime-local" placeholder=""/>
+            date:<input type="date" placeholder=""/>
+            moth：<input type="month" placeholder=""/>
+            time：<input type="time" placeholder=""/>
+            week：<input type="week" placeholder=""/>
+            number：<input type="number" placeholder=""/>
+            email：<input type="email" placeholder=""/>
+            url：<input type="url" placeholder=""/>
+            search：<input type="search" placeholder=""/>
+            tel：<input type="tel" >
+            color:<input type="color"> 
+    ·文本输入框：
+        <textarea rows=3></textarea>
+    ·单选
+        <input type="radio" name="sex" value="nv"/>nv
+        <input type="radio" name="sex" value="nv" checked="checked"/>nv
+         如果需要秀死，那么就是
+        <label>
+            <input type="radio" name="sex" value="nv"/>nv
+            <input type="radio" name="sex" value="nv" checked="checked"/>nv
+        </label>   
+    ·下拉框
+        <select>
+            <optgroup>
+                <option></option>
+                <option></option>
+                <option></option>
+            </optgroup>
+        </select>
+案例：  
+    <form method="get" action="sss">
+        <label for="s">XXXX</label>
+        <input type="text" name="dd" id="s" />
+        <button type="submit" class=""></button>
+    </form>
+
+表单布局：
+    <form method="get" action="">
+        <div class="form-group">
+            <label for="dd">ddd</label>
+            <input type="text" id="dd" class="form-control">
+        </div> 
+    </form>
+图片的显示：
+    
+
+表单样式：
+    默认
+    

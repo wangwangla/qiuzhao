@@ -1,0 +1,81 @@
+#include("/template/common/layout/_page_layout.html")
+#@layout()
+
+#define css()
+<style>
+
+</style>
+#end
+
+#define js()
+<script type="text/javascript">
+    layui.use(['form', 'layer','laydate','upload'], function () {
+        // 操作对象
+        var form = layui.form
+            , layer = layui.layer
+            , $ = layui.jquery
+            ,upload=layui.upload;
+        var laydate = layui.laydate;
+        
+        laydate.render({
+			elem:'#date'
+		});
+        upload.render({
+            elem: '#test2'
+            ,url: '/contract/postUpload'
+            ,multiple: true
+            ,before: function(obj){
+              //预读本地文件示例，不支持ie8
+              obj.preview(function(index, file, result){
+                $('#demo2').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
+              });
+            }
+            ,done: function(res){
+              //上传完毕
+            }
+          });
+        form.on('submit(sub)', function(data){
+
+            util.sendAjax ({
+                type: 'POST',
+                url: '#(ctxPath)/contract/postUpload',
+                data: $('#addForm').serialize(),
+                loadFlag: true,
+                success : function(data){
+                    pop_close();
+                }
+            });
+
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+         
+    });
+</script>
+#end
+
+#define content()
+<div class="x-body">
+    <form id="addForm" class="layui-form" action="">
+		<input type="hidden" name="id" value="#(data)">
+        
+		 <div class="layui-form-item">
+         	<div class="layui-upload">
+  		  		<button type="button" class="layui-btn" id="test2">多图片上传</button> 
+  		  		
+  		 		<blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+   			 	预览：
+    			<div class="layui-upload-list" id="demo2"></div>
+ 				</blockquote>
+			</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+            <button  class="layui-btn" lay-filter="sub" lay-submit>
+                保存
+            </button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </form>
+</div>
+#end

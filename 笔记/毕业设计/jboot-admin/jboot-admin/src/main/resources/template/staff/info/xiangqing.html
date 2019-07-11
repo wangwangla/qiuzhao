@@ -1,0 +1,68 @@
+#include("/template/common/layout/_page_layout.html")
+#@layout()
+
+#define css()
+<style>
+
+</style>
+#end
+
+#define js()
+<script type="text/javascript">
+    layui.use(['form', 'layer','laydate'], function () {
+        // 操作对象
+        var form = layui.form
+            , layer = layui.layer
+            , $ = layui.jquery;
+        var laydate = layui.laydate;
+        laydate.render({
+			elem:'#date'
+		});
+        form.on('submit(sub)', function(data){
+
+            util.sendAjax ({
+                type: 'POST',
+                url: '#(ctxPath)/staff/info/postUpdate',
+                data: $('#addForm').serialize(),
+                loadFlag: true,
+                success : function(data){
+                    pop_close();
+                }
+            });
+
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+    });
+</script>
+#end
+
+#define content()
+<div class="x-body">
+    <div class="layui-form-item">
+        <label class="layui-form-label"><em class="require-mark">*</em>姓名</label>
+        <p style="line-height:40px">#(data.staffName)</p> 
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"><em class="require-mark">*</em>出生日期</label>
+      	<p style="line-height:40px">#(data.staffBirthday)</p>  
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"><em class="require-mark">*</em>类型</label>
+        <p style="line-height:40px">#(data.staffCategory)</p> 
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"><em class="require-mark">*</em>电话</label>
+      	<p style="line-height:40px">#(data.staffTel)</p>  
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"><em class="require-mark">*</em>状态</label>
+      	<p style="line-height:40px">#(data.staffStatus)</p>  
+    </div>
+    
+    <div class="layui-form-item">
+        <label class="layui-form-label"><em class="require-mark">*</em>照片</label>
+      	<image src="http://118.24.235.237/#(data.staffPhoto)" width="80px" height="80px" >  
+    </div>
+
+</div>
+#end

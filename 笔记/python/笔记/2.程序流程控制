@@ -1,0 +1,10 @@
+本机目标
+    if   while for break  contiune
+1.选择结构
+    if if/else if/elif/else
+2.循环结构
+    while 条件：
+3.for:
+    for 变量 in 序列
+    序列：'python'  range(start,end)  list
+

@@ -1,0 +1,38 @@
+在处理图片的时候，不要直接指定其大小，可以使用它的max-width属性
+img{
+    max-width:100%;
+}
+
+CSS不指定具体的像素
+比如：940px；
+一般只指定百分比：100%,或者auto
+
+*{
+    padding:0px;
+    margin:0px;
+}
+指定位置
+
+网页字体，默认是16（100%）
+一级标签：
+    1.5倍的标准
+    small：0.875倍
+    h1{
+        font-size:1.5em;
+    }
+    small{
+        font-size:0.875em;
+    }
+
+float的优势是一行放不下，会自动向下一行移动。
+    .main{
+        float:right;
+        width:70%;
+    }
+
+
+调整页面的宽度
+    @media only screen and (min-device-width:320px) and (max-device-width:48px){
+
+    }
+

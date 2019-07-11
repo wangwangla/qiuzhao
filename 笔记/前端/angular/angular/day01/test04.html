@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>遍历</title>
+		<script src="../lib/angular.min.js"></script>
+	</head>
+	<body ng-app="App">
+		<div ng-controller="Demo04Controller">
+			<ul>
+				<li ng-repeat="(key,star) in stars">{{star.name}}{{star.age}}</li>
+			</ul>
+			
+		</div>
+		<script>
+			var App = angular.module("App",[]);
+			App.controller("Demo04Controller",['$scope',function($scope){
+				$scope.stars= [{name:'kamhw',age:4},{name:'kamhw',age:4},{name:'kamhw',age:4}]
+				
+			}]);
+		</script>
+	</body>
+</html>

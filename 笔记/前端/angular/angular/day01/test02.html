@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>模型和视图</title>
+		<script src="../lib/angular.min.js"></script>
+	</head>
+	<body>
+		<div ng-app="app">
+			<div ng-controller="Demo02Controller">
+				<!--使用双括号，会有闪锁，以为加载到之后才会显示，但是on-bind就不会出现-->
+				<h1>{{name}}</h1>
+				<h2 ng-bind="name"></h2>
+				<h2 ng-bind-template="name"></h2>
+			</div>
+		</div>
+		<script>
+			var App = angular.module('app',[]);
+			App.controller("Demo02Controller",['$scope',function($scope){
+				$scope.name="Demo";
+			}]);
+		</script>
+	</body>
+</html>

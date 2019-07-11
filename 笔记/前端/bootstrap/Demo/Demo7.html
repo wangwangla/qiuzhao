@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link href="lib/bootstrap.css" rel="stylesheet"/>
+		<link href="lib/bootstrap-theme.css" rel="stylesheet" />
+		<script src="lib/jquery.min.js"></script>
+		<script src="lib/bootstrap.js"></script>
+		<title></title>
+	</head>
+	<body>
+		<!--下拉菜单-->
+		<!--
+			<a href="#" class="btn：按钮
+				 btn-lg：大按钮
+				 btn-success"：成功按钮
+				 data-toggle="dropdown"：激活，负责无法使用>
+				 
+				 <ul class="dropdown-menu">否则不在下拉里面
+		-->
+<!--		<div class="dropdown">
+			<a href="#" class="btn btn-lg btn-success" data-toggle="dropdown">激活按钮<i class="caret"></i></a>
+			<ul class="dropdown-menu">
+				<li>222</li>
+				<li>111</li>
+				<li>2222</li>
+				<li>333</li>
+			</ul>
+		</div>-->
+		<div class="dropdown">
+			<a href="#" class="btn btn-lg btn-success" id="down">激活按钮<i class="caret"></i></a>
+			<ul class="dropdown-menu">
+				<li>222</li>
+				<li>111</li>
+				<li>2222</li>
+				<li>333</li>
+			</ul>
+		</div>
+		<script type="text/javascript">
+			$(function(){
+				$('#down').dropdown();
+			})
+		</script>
+	</body>
+</html>

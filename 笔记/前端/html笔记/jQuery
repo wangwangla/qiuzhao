@@ -1,0 +1,86 @@
+1.使用步骤：
+    下载引入文件
+    <script src="js路径"></script>
+2.基本语句
+    加载完整个页面后执行
+    jQuery(document).ready(function(){
+
+    })
+
+    $(document).ready(function(){
+        
+    })
+    
+    $(function(){
+
+    })
+
+    $("选择器").动作()
+3.选择器
+    （1）标签名
+        $("p")
+    （2）id选择器
+        $("#test")
+    （3）class选择器
+        $(".test")
+        $("p.class")
+    补充：
+        $("*")：选择所有组件
+        $(this)：选择当前正在起作用的组件
+        $("p[first]")  $("[href]")
+        $("tr:even")   $("tr:odd")
+4.组件内容
+    （1）text:设置或者获取组件的文字
+    （2）html：获取html源代码
+    （3）val()：获取值
+
+
+5.font-family：字体名称
+  font-size:字体大小
+  font-style:字体斜体
+  font-weight:文字粗体
+
+  position：设置排列方式
+  width:指定组件宽度
+  height:指定组件高度
+  line-height:行高
+  left:指定组件于左边距离
+  right：指定右边距离
+
+
+  margin：边界
+    margin-left
+    margin-right
+    margin-bottom
+    margin-top 
+    使用：
+        div{
+            margin-left
+            margin-right
+            margin-bottom
+            margin-top
+        }
+        div{margin:上 右 下 左}
+        div{margin:Xpx}四边一样
+        div{margin:Xpx ypx} 上（下） 左（右）
+  Border：边框
+
+  Padding:边界留白
+
+6.为组件设置背景色和渐层
+    background-color
+    background-img
+        bady{
+            background-image:url(xx.jpg)
+        }
+    background-repeat:是否重复
+        repeat:重复
+        repeat-x:水平重复
+        repeat-y：垂直重复
+        no-repeat:不重复
+    background-attachment:北京和滚动条一起运动
+        fixed:网页滚动背景不动
+        scroll：网页滚动  背景滚动 默认
+    background-size:
+        XX XX
+

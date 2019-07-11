@@ -1,0 +1,167 @@
+#include("/template/common/layout/_page_layout.html")
+#@layout()
+
+#define css()
+<style>
+
+</style>
+#end
+
+#define js()
+<script type="text/javascript">
+    layui.use(['table', 'layer'], function () {
+        var table = layui.table
+            , layer = layui.layer
+            , $ = layui.jquery
+            , form = layui.form;
+
+        // 表格渲染
+        var tableIns = table.render({
+            elem: '#dateTable'                  //指定原始表格元素选择器（推荐id选择器）
+            , id: 'dateTable'
+            , even: true //开启隔行背景
+            , size: 'sm' //小尺寸的表格
+            , height: 'full-150'    //容器高度
+            , cols: [[                  //标题栏
+                {checkbox: false, sort: true, fixed: true, space: true}
+                , {field: 'waregouseCategoryId', title: 'ID', width: 60}
+                , {field: 'waregouseCategoryName', title: '分类名称', width: 60}
+                , {field: 'waregouseCategoryOptionDate', title: '创建日期', width: 120}
+                , {field: 'waregouseCategoryOptionUser', title: '创建人', width: 180}
+                , {field: 'waregouseCategoryUpdateDate', title: '更新日期', width: 180}
+                , {fixed: 'right', title: '操作', width: 120, align: 'center', toolbar: '#barOption'} //这里的toolbar值是模板元素的选择器
+                
+             ]]
+            , url: '#(ctxPath)/category/waregorycategory/tableData'
+            , method: 'get'
+            , request: {
+                pageName: 'pageNumber' //页码的参数名称，默认：page
+                ,limitName: 'pageSize' //每页数据量的参数名，默认：limit
+            }
+            , page: true
+            , limits: [30, 60, 90, 150, 300]
+            , limit: 30 //默认采用30
+            , loading: true
+            , done: function (res, curr, count) {
+            }
+        });
+
+        table.on('tool(dateTable)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    util.sendAjax ({
+                        type: 'POST',
+                        url: '#(ctxPath)/category/waregorycategory/delete',
+                        data: {id : data.waregouseCategoryId},
+                        loadFlag: true,
+                        success : function(data){
+                            layer.close(index);
+                            reloadTableQuery();
+                        },
+                        unSuccess: function (data) {
+                            layer.close(index);
+                        }
+                    })
+                });
+            } else if(obj.event === 'edit'){
+                pop_show('编辑数据','#(ctxPath)/category/waregorycategory/update?id=' + data.waregouseCategoryId,'','', function(){
+                    reloadTableQuery();
+                });
+            }  
+        });
+
+        $("#add").click(function(){
+            pop_show('添加数据','#(ctxPath)/category/waregorycategory/add','','', function(){
+                reloadTableQuery();
+            });
+        });
+
+        $("#cache").click(function(){
+            layer.confirm('确定刷新数据缓存吗', function(index){
+                util.sendAjax ({
+                    type: 'POST',
+                    url: '#(ctxPath)/category/waregorycategory/cache',
+                    data: {},
+                    loadFlag: true,
+                    success : function(data){
+                        layer.close(index);
+                    },
+                    unSuccess: function (data) {
+                        layer.close(index);
+                    }
+                });
+            });
+        });
+
+        reloadTableQuery = function () {
+            table.reload('dateTable', {
+                url: '#(ctxPath)/category/waregorycategory/tableData'
+                ,where: {type: $('#type').val(), typeDesc: $('#typeDesc').val()} //设定异步数据接口的额外参数
+            });
+        }
+
+        reloadTable = function (type, typeDesc) {
+            table.reload('dateTable', {
+                url: '#(ctxPath)/category/waregorycategory/tableData'
+                ,where: {type: type, typeDesc: typeDesc} //设定异步数据接口的额外参数
+            });
+        }
+
+        form.on('submit(search)', function(data){
+            reloadTable(data.field.type, data.field.typeDesc);
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+    });
+</script>
+#end
+
+#define content()
+    <div class="layui-fluid">
+         
+        <hr>
+        <div class="layui-row">
+            <div class="layui-btn-group">
+            
+                <button id="add" class="layui-btn layui-btn-small">添加数据</button>
+           
+            </div>
+            <div class="layui-btn-group">
+           
+                <button id="cache" class="layui-btn layui-btn-small">刷新缓存</button>
+          
+            </div>
+            <table id="dateTable" lay-filter="dateTable"></table>
+        </div>
+    </div>
+
+<script type="text/html" id="barOption">
+ 
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+ 
+
+    #[[
+    {{#  if(d.status == '0'){ }}
+    ]]#
+    #shiroHasPermission('/system/data/use')
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="use">启用</a>
+    #end
+    #[[
+    {{#  } }}
+    ]]#
+
+    #[[
+    {{#  if(d.status == '1'){ }}
+    ]]#
+    #shiroHasPermission('/system/data/unuse')
+    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="unuse">停用</a>
+    #end
+    #[[
+    {{#  } }}
+    ]]#
+
+   
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  
+</script>
+#end

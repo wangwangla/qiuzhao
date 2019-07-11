@@ -1,0 +1,22 @@
+1.shell编程的步骤
+    写文件   vi
+    授权     chmod u+x 文件名字    或者 chmod 777 文件名字  给文件或者文件夹授权
+    执行     ./文件名      sh 文件名.sh
+
+2.举例hello
+    （1）shell代码
+        #第一个shell练习
+        #!/bin/bash
+        echo "hello ,i am lalala!"   #输出一句话
+        echo #空格
+    （2）授权
+        chmod u+x XX    只有用户本身可以执行
+    （3）./XX    sh xx
+
+
+总结：vi打开编辑器  通过chmod授权  然后执行  文件保存为.sh文件
+
+
+
+
+[目录](https://github.com/wangwangla/biji/tree/master/README.md)

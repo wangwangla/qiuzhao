@@ -1,0 +1,200 @@
+补充：
+    （1）chmod和chown的区别？
+        chmod:更改文件的访问权限，使用于普通文件，也可以包括目录   rwx  421   
+        chown:指定文件所有者改变为指定用户或者组
+    
+        我的总结：
+            chmod：文件或者是文件夹
+            chown：文件的组或者用户
+
+    （2）find查找指令
+        find -name filename   
+        find -uid n
+        find -size n
+        find -amin n        指定时间分钟 
+        find -atime n       
+
+        我的总结：
+            find可以根据多个参数进行查询
+
+    （3）grep查找特定表达式的字符或者字符串
+        ls -l | grep *l*
+
+        我的总结：
+            通过管道，将ls出来的结果输出到管道，然后执行下一条指令
+
+    （4）ping  向目标主机发生请求
+    （5）ifconfig
+        基本网络配置
+    （6）route 显示和设置路由
+    （7）netstat 显示各种网络想关的信息
+ 
+ 
+    我的总结：ping获取网络是否可达，数据包是否可达
+            ifconfig:查看网络配置
+            route :查看显示路由信息
+            netstat：显示网络相关的问题
+            
+    系统资源管理常用命令
+    （1）ps 
+        静态显示当前的进程信息
+    （2）ps aux | more
+    （3）top动态显示进程
+    （4）free 显示空间的使用情况
+    （5）df查看剩余磁盘空间
+
+    我的总结：
+        ps：显示静态的进程
+        top：动态的显示进程
+        free:显示空间的使用情况
+        df:查看剩余磁盘空间
+
+shell脚本的变量
+    1.变量使用
+        变量名=值  不可以有空格
+      例子
+        #变量练习
+        #！/bin/bash
+        echo 正确的写法
+        num=10
+        str="10"
+
+    我的总结：
+        变量赋值不加空格
+        没有数据类型，输入的是什么数据类型，就显示出是什么数据类型
+
+    2.变量的输出 
+        echo $num
+      例子
+        #变量的输出
+        #！/bin/bash
+        echo 正确的写法
+        num=10
+        str="10"
+        echo $num
+        echo $str
+
+    我的总结：
+        输出的时候，使用$变量名方式
+
+    3.输入
+        read num
+      例子
+        #变量的输入
+        #！/bin/bash
+        echo 正确的写法
+        read num
+        echo $num
+
+    我的总结：
+        read num 接收来自键盘的输入
+
+
+      使用-p输入多个参数
+    4.变量输出echo
+        -n：输出文字后不换行        echo -n "hello"
+        -e:输出某些特殊的字符       echo -e
+        --help
+        --version
+
+        我的总结：
+            -n输出但是后面就已经没了回车
+
+    5.  #echo的用法  
+        #！/bin/bash
+        echo hello world 
+        echo "hello world"
+        str=hello world       //这种是无法正确输出的 
+        echo $str
+        str1="hello world"
+        echo $str1
+        也就是说通过echo输出的时候，不加“”是可以的，但是通过变量的方式输出，他就无法正确输出了
+    
+        我的总结：
+            字符串的输出需要加上“”,如果有空格是不会被正确的显示的 
+    
+    6.shell中的特殊变量的使用
+        (1)位置参数介绍
+        在shell编程中，每一个脚本可以使用一些参数，，一些参数，按照出现的先后顺序不同而进行赋值
+        $0       脚本名称
+        $1~$9    脚本执行是输出1~9
+        $#       输出 参数的个数
+        $?       脚本返回值
+        $*      参数的具体内容
+
+        #echo的用法
+        #！/bin/bash
+        echo "执行该脚本工输出了"$#"个参数"
+        echo "脚本的名字"$0
+        echo "第一个参数"$1
+        echo "脚本中传入参数$*"
+
+        [root@localhost kangwang]# ./te.sh  12 234 n4
+        执行该脚本工输出了3个参数
+        脚本的名字./te.sh
+        第一个参数12
+        脚本中传入参数12 234 n4
+
+        我的总结：
+            $0:脚本的名称
+            $1~$9:脚本执行的是输出1~0【也就是输入的第几个参数】
+            $#:参数的个数
+            $*:具体的内容
+   
+    
+    7.$@和$*的区别
+        变量$@和$*都能在一个变量中包含所有的命令参数，但是二者有存在着不同
+        变量$*是将命令行中的所有参数都作为一个单词来处理，这个单词包含有命令、脚本在执行是的是所有的参数【一个对象】
+        变量$@是将所有发输入参数看做多个对象，是所有对象的列表，而不是和$*一样，将一个参数作为一个对象来处理【对个对象】
+
+        举例：
+            #echo的用法    -e
+            #！/bin/bash
+            echo 使用for结构处理变量$@
+            count=1
+            for tmpstr in "$@"
+            do
+                echo 第$count个参数的值为：$tmpstr
+                count=$[$count+1]
+            done
+            echo
+            echo 使用for结构处理变量$*
+
+            count=1
+            for tmpstr in "$*"
+            do
+                echo 第$count个变量值为：$tmpstr
+                count=$[$count+1]
+            done
+        结果：
+            【$@ 多个】
+            使用for结构处理变量hello wprld 123 456
+            第1个参数的值为：hello
+            第2个参数的值为：wprld
+            第3个参数的值为：123
+            第4个参数的值为：456
+            【$* 一个对象】
+            使用for结构处理变量hello wprld 123 456
+            第1个变量值为：hello wprld 123 45
+
+    8.环境变量的使用
+        环境变量是每一种编程语言都会使用的变量
+        （1）shell中环境变量
+            所有的环境变量都使用大写字母，这样便于和普通变量区分，在shell终端输入env命令或者使用printenv命令就可以显示当前有效的环境变量
+            #!/bin/bash
+
+            echo "使用命令env显示环境变量"
+            env
+        （2）常用环境变量以及作用
+            $SHELL          系统默认shell类型
+            $TERM           终端类型
+            $USER           用户名
+            $LS_COLORS      颜色信息
+            $LOGNAME        当前用户的登录名
+            $LANGUAGE       当前的终端语言
+            $PWD            当前路径
+            $PATH           环境变量路径
+
+
+
+[目录](https://github.com/wangwangla/biji/tree/master/README.md)

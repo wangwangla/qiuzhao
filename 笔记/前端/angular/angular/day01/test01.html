@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>练习01MVC</title>
+		<script src="../lib/angular.min.js"></script>
+	</head>
+	<body>
+		<!--因为是模块化，所以在这里使用一个div-->
+		<!--			
+		既然说了是mvc
+			1.m就是数据，这个数据来自于后端
+			2.v：就是这个视图
+			3.c就是控制层
+			m就是数据，数据来自于c，angularjs是一个模块化的，所以创建一个模块
+		-->
+		<!--v-->
+		<!--
+			依赖于这个模块
+			依赖的时候是和括号中的APP有关系的
+			
+		-->
+		<div class="box" ng-app="APP"> 
+			<!--依赖于这个controller-->
+			<div ng-controller='DemoController'>
+				<div ng-include="'./header.html'"></div>
+				<div ng-include="'./footer.html'"></div>
+				<h1>{{name}}</h1>
+				<h2 ng-bind="name"></h2>
+				<!---->
+				<h2 ng-show='0'>{{name}}</h2>
+				<div tag></div>
+				<div list></div>
+			</div>
+		</div>
+		<script>
+			/*
+			 * angular.Module(模块名，依赖的模块[数组])
+			 * 这是一个对象，这个对象下可以有多个方法
+			 * 实现具体逻辑
+			 */
+			var App = angular.module('APP',[]);
+			/*
+			 * 使用对象，创建一个controller\
+			 * 第一个参数是名字，第二个参数是方法，这个里面的参数必须相同
+			 */
+			App.controller('DemoController',['$scope',function($scope){
+				/*
+				 * scope是一个工作对象，它就是model*
+				 * 
+				 */
+				$scope.name= '康旺';
+				$scope.school='宿舍';
+			}]);
+			
+			
+			/*z自定义tag*/
+			App.directive('tag',function(){
+				return{
+					restrict:'EA',
+					template:'<h1>SSSSSSSSSSSSSSSS</h1>'
+					
+				}
+			});
+			App.directive('list',function(){
+				return{
+					restrict:'EA',
+					templateUrl:'./list.html',
+					replace:true
+				}
+			});
+		</script>
+		
+	</body>
+</html>
