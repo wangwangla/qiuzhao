@@ -1,4 +1,4 @@
-package kw.test.demo.factory.simple;
+package kw.test.demo.factory.method;
 
 public class Audi extends Car{
 
