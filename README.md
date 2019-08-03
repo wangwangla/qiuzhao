@@ -10,7 +10,7 @@
 |                                                              |                                                              |           |      |                | [Redis](https://github.com/wangwangla/qiuzhao/tree/master/%E7%AC%94%E8%AE%B0/Redis) |      |
 |                                                              |                                                              |           |      |                | java                                                         |      |
 |                                                              |                                                              |           |      |                | 操作系统                                                     |      |
-|                                                              |                                                              |           |      |                | [设计模式](https://github.com/wangwangla/qiuzhao/tree/master/%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F) |      |
+|                                                              |                                                              |           |      |                | [设计模式(在更)](https://github.com/wangwangla/qiuzhao/tree/master/%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F) |      |
 
 
 
