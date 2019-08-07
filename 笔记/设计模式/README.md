@@ -11,7 +11,8 @@
 
 结构型
 
-- [适配器模式]()
-
+- [适配器模式](https://github.com/wangwangla/qiuzhao/blob/master/%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/10.%E9%80%82%E9%85%8D%E5%99%A8.md)
+- [代理模式]()
+- [动态代理]()
 - [门面模式]()
 
