@@ -19,6 +19,10 @@
 - [责任链模式](https://github.com/wangwangla/qiuzhao/blob/master/%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/18.%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F.md)
 - [迭代器模式](https://github.com/wangwangla/qiuzhao/blob/master/%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/19.%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F.md)
 - [中介者模式]()
+- [策略模式]()
+- [状态模式]()
+
+
 
 
 
