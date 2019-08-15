@@ -18,11 +18,11 @@
 - [摸版方法](https://github.com/wangwangla/qiuzhao/blob/master/%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/16.%E6%91%B8%E7%89%88%E6%96%B9%E6%B3%95.md)
 - [责任链模式](https://github.com/wangwangla/qiuzhao/blob/master/%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/18.%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F.md)
 - [迭代器模式](https://github.com/wangwangla/qiuzhao/blob/master/%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/19.%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F.md)
-- [中介者模式]()
-- [策略模式]()
-- [状态模式]()
-- [观察者模式]()
-- [备忘录模式]()
+- [中介者模式](https://github.com/wangwangla/qiuzhao/blob/master/%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/20.%E4%B8%AD%E4%BB%8B%E6%A8%A1%E5%BC%8F.md)
+- [策略模式](https://github.com/wangwangla/qiuzhao/blob/master/%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/21.%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F.md)
+- [状态模式](https://github.com/wangwangla/qiuzhao/blob/master/%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/22.%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F.md)
+- [观察者模式](https://github.com/wangwangla/qiuzhao/blob/master/%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/23%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F.md)
+- [备忘录模式](https://github.com/wangwangla/qiuzhao/blob/master/%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%A4%87%E5%BF%98%E6%A8%A1%E5%BC%8F.md)
 
 
 
