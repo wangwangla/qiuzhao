@@ -253,3 +253,105 @@
   - yield这个有意思，想起来小时候，哥哥和我玩，把饼干放在桌子上，然后我要去取，他就赶紧拿到手上。哈哈哈哈。
 
     yield将cpu释放，然后自己再去抢夺。
+
+### Volite与java内存模型
+
+java内存模型核心都是原子性、可见性、有序性展开，对于有序和可见，java提供了一个关键字volite。可以告诉虚拟机有修改时，保证其他线程可见。为了原子性和可见性最直观的就是使用这个关键字。
+
+**它是无法保证复合操作的原子性的，它并没有锁的作用。**
+
+最典型的就是i++,多个线程执行，最终结果不是想要的结果。
+
+举例：
+
+```
+	private static boolean ready ;
+	private static int i=0;
+	private static class volitedemo extends Thread{
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			if(ready) {
+				System.out.println("nb---------------"+i);
+			}
+		}
+	}
+	public static void main(String[] args)throws InterruptedException {
+		volitedemo s = new volitedemo();
+		s.start();
+		Thread.sleep(100);
+		i=2;
+		ready = true;
+		Thread.sleep(100);
+	}
+```
+
+在客户端模式下，上面的是么有问题的，在服务端优化的情况下就会出现问题，所以需要加关键字，不允许重排。
+
+但是他的有序和性还是非常有用的
+
+
+
+### 线程组
+
+线程非常多的情况下，就可以使用一个组来存储它。线程创建结束之后，可以将其放入组中，组包含的方法有可以查看活跃的总数，不过是个变值，list会打印所有的信息，线程组就是将线程和组联系起来。
+
+```
+package kw.suanfa.demo;
+
+public class Demo06 implements Runnable{
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		System.out.println("=======");
+	}
+	
+	public static void main(String[] args) {
+		ThreadGroup t = new ThreadGroup("test");
+		Thread t1 = new Thread(t,new Demo06(),"T1");
+		Thread t2 = new Thread(t,new Demo06(),"T2");
+		t1.start();
+		t2.start();
+		System.out.println(t.activeCount());
+		t.list();
+	}
+}
+
+```
+
+线程组有一个方法就是可以使用stop方法，停止所有的线程，但是这个方法和Thread.stop一样，存在很多问题。
+
+### 守护线程
+
+在后台默默做一些事情，比如垃圾回收等，用户线程会执行一些业务，当用户线程全部结束之后，守护现场也就不会存在了，他没有存在的必要了，一个java程序只有一个守护线程。
+
+**设置守护线程的位置，在start方法执行之前，如果之后调用会有异常抛出，但是程序会继续执行，此时他们是普通线程**
+
+如果将其设置为守护进程，那么main函数执行结束，程序就会退出。
+
+
+
+### 线程优先级
+
+线程优先级高的会首先进行，执行完毕，java中设置默认的3个级别。
+
+
+
+### syn
+
+voilte仅仅可以保证修改后其他线程可以感知到变化，并不能保证他输出会正确。
+
+线程一将值读取并修改之后，另一个线程也读取了，进行修改，结果会不正确，为了结果正确，那么就需要使用线程安全的方式syn，每次只允许一个操作，另一个不可以操作，也不可以读取，也就是说每次只能有一个操作。
+
+**Syn的使用总结**
+
+- 加给定对象的锁
+- 加类锁
+- 加实例方法锁
+
+实例方法锁需要注意，加入创建两个线程，那么就会有两个实例方法锁，所以结果可能会和自己想要的几个不一致。
+
+
+
+如果不想过多修改代码，只需要在其上面加上static关键字就可以了。将实例方法锁变为一个类锁。
