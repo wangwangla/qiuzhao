@@ -12,5 +12,5 @@
 |                                                              |                                                              |           |      |                | 操作系统                                                     |      |
 |                                                              |                                                              |           |      |                | [设计模式(完成)](https://github.com/wangwangla/qiuzhao/tree/master/%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F) |      |
 
-
+不知道可以坚持多久，也不知道有没有用，之前做了好多不是也没有用吗，好吧，那就这样吧
 
