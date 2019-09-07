@@ -24,12 +24,16 @@
 - 创建线程
 
   ```
+  //new
   Thread t = new Thread();
+  //开始执行
   t.start();
   start方法执行之后会启动一个线程去执行run方法
   ```
 
   问题1：直接调用run方法和start()执行有什么区别。
+
+  父类中run啥也没做，需要来实现、
 
 - 运行线程
 
@@ -52,8 +56,7 @@
   - 创建方式二
 
   ```
-  Thread t2 = new Thread(new Runnable() {
-  			
+  Thread t2 = new Thread(new Runnable() {			
   			@Override
   			public void run() {
   				// TODO Auto-generated method stub
@@ -65,15 +68,56 @@
 
   也可以继承Thread，重写run方法，也可以实现Runnable，重写run方法。
 
+  ```
+  class Thread implements Runnable
+  ```
+
+  
+
 - 终止线程
 
-  停止可以使用stop，但是已经废弃了，不在使用，它将执行一般的线程给停止了，导致数据不一致。stop停止，他会立即的将线程停止，并且释放锁，其他线程就可以进入。导致数据不一致。
+  停止可以使用stop，但是已经废弃了，不再使用，它将执行的线程直接给停止了，导致数据不一致。stop停止，他会立即的将线程停止，并且释放锁，其他线程就可以进入。导致数据不一致。
+
+  - 代码实现
+
+  ```
+  class User{
+      name,sex;
+      get / set
+  }
+  
+  thread1
+  User u = new User();
+  class thread1 implement Runnable{
+      public void run(){
+          
+          u.setName("");
+          u.setSex("");
+      }
+  }
+  
+  class thread2 implement Runnable{
+      public void run(){
+          Syso(u.toString);
+      }
+  }
+  
+  main(String[]args){
+      thread1 t1 = new thread1();
+      t1.start();
+      thread2 t2 = new thread2();
+      t2.start();
+  }
+  ```
+
+  
 
   如何优雅的停止？？？
 
   我们告诉他们，什么时候停止线程即可
 
   - 在run 方法，while循环出设置一个标志位，如果标志位不符合条件，让他跳出去。
+  - 后台常驻线程一般在一个循环中，设置标志位然后跳出。
 
 - 中断线程
 
@@ -127,6 +171,10 @@
   ```
 
   也许你会说，写个标志位岂不是更好，没有必要使用API提供的方法，其实是可以，但是中断肯定有它的优势。
+
+  **总结：**
+
+  中断标志位，在执行的过程，我们可以使用中断设置状态，然后来退出线程，但是我们在sleep和wait的时候需要做额外处理，中断发生，会清除中断信息，所以需要在此中断。
 
 - 出现了wait或者sleep，只能通过中断来识别了。
 
@@ -199,6 +247,45 @@
   存在监视器就可以执行，执行之后就会释放监视器【这是它和sleep的区别】，说点别的，人不为己，天诛地灭，他需要别的线程来唤醒它，他肯定需要让位呀，所以他会释放，这个应该是必须释放吧。
 
   得到执行权的并不是直接就执行了，他什么时候执行，还是需要看自己的本事，获得锁才可以呀。
+
+  - 代码实现
+
+    ```
+    final Object o = new Object ()
+    class thread2 implement Runnable{
+        public void run(){
+        	syn(o){
+            	Syso("==============");    
+        		try{
+                    Syso("==================");
+                    o.wait();
+        		}catch(InterruptException e){
+                    e.print();
+        		}
+        		Syso("=============");
+        	}
+        }
+    }
+    
+    class thread2 implement Runnable{
+        public void run(){
+        	syn(o){
+            	Syso("==============");    
+        		try{
+                    Syso("==================");
+                    o.notify();
+        		}catch(InterruptException e){
+                    e.print();
+        		}
+        		Syso("=============");
+        	}
+        }
+    }
+    ```
+
+  **总结：**
+
+  wait和notify方法是在object中的，必须在syn代码块中才可以执行，执行wait之后释放锁，执行notify必须获得锁，notify会随机的释放一个（不公平），notifyAll是将所有的释放。
 
 - suspend和resume挂起和继续执行
 
