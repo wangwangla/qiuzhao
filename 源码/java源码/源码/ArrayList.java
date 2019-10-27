@@ -68,5 +68,8 @@ public class ArrayList<T> {
     private String outOfBoundsMsg(int index) {
         return "Index: "+index+", Size: "+size;
     }
-    
+	
+	public static void main(String[] args) {
+		System.out.println("XXXXXXXX");
+	}
 }
